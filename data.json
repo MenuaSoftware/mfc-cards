@@ -1,17 +1,11 @@
 {
-    "index": 1,
-    "indexpdf": 1,
+    "index": 0,
+    "indexpdf": 0,
     "members": [
         {
             "Id": 0,
             "Name": "Test",
             "LastName": "Test",
-            "Categorie": "Volwassen"
-        },
-        {
-            "Id": 1,
-            "Name": "Menua",
-            "LastName": "Hovhannisyan",
             "Categorie": "Volwassen"
         }
     ]

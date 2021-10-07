@@ -24,7 +24,7 @@ class picture:
                 my_image = Image.open("assets/template_green.png")
             elif(categorie == "vrouwen"):
                 categorie_text = "Vrouwen"
-                my_image = Image.open("assets/template_rose.png")
+                my_image = Image.open("assets/template_pink.png")
             else:
                 categorie_text = "UNKNWON"
                 my_image = Image.open("assets/template_blue.png")

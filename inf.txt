@@ -1,7 +1,15 @@
--imposition pakt fotos van kaarten -> pakt alle foto's en verdeeld over a4 pdf, als blad vol is maakt hij een nieuwe blad aan
--kaarten worden dan in oudekaarten map geplaats
-    -
+-button voor te imposition
+-foto scan -> JUISTE groote knippen
+    -folder photos met de foto met id dus bv, 65.png of 18.png
+    of met browse je moet zelf de foto selecteren hierna zet je die foto in een folder photos en verander je de photonaam in naam-achternaam-id.png
+    -zet de foto op lidkaart maar moet optie zijn, als je niks zet dan moet leeg blijven
 
--filtering toevoegen mensen zoeken
--toevoegen foto's opslagen op persoon, dus een parameter bv foto = "naam-achternaam.png"
+
+-filtering toevoegen mensen zoeken-> als je iemand zoekt opent nieuwe window met zijn of haar gegevens
 -gui mooi uitbereiden
+    -mooieren maken -> eerst in photoshop layout maken dan pas uitwerken -> voorbeelden op internet kijken!
+    -error labels toevoegen
+
+-.exe bestand maken
+
+-(imposition enkel doen voor volle bladen, dus geen bladen maken met 1 tot en met 6 enkel als het blad vol kan zijn)
