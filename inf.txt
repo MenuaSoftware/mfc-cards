@@ -1,0 +1,7 @@
+-imposition pakt fotos van kaarten -> pakt alle foto's en verdeeld over a4 pdf, als blad vol is maakt hij een nieuwe blad aan
+-kaarten worden dan in oudekaarten map geplaats
+    -
+
+-filtering toevoegen mensen zoeken
+-toevoegen foto's opslagen op persoon, dus een parameter bv foto = "naam-achternaam.png"
+-gui mooi uitbereiden
