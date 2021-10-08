@@ -6,7 +6,8 @@
             "Id": 0,
             "Name": "Test",
             "LastName": "Test",
-            "Categorie": "Volwassen"
+            "Categorie": "Volwassen",
+            "Picture": "results/passfotos/0-Test.png"
         }
     ]
 }

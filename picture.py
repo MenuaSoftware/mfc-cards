@@ -1,11 +1,15 @@
 from PIL import Image, ImageFont, ImageDraw
-
+import os, os.path
+import math
+import json
+from pathlib import Path
+import shutil
 
 class picture:
-    def __init__(self,p_id,p_naam,p_achternaam,p_categorie):
-        self.drawPic(p_id,p_naam,p_achternaam,p_categorie)
+    def __init__(self,p_id,p_naam,p_achternaam,p_categorie,p_im = None):
+        self.drawPic(p_id,p_naam,p_achternaam,p_categorie,p_im)
 
-    def drawPic(self,id, naam,achternaam,categorie):
+    def drawPic(self,id, naam,achternaam,categorie,p_im = None):
         if(id != "" and naam != "" and achternaam != "" and categorie != ""):
             lstname = 55
             mnt = 60
@@ -74,14 +78,87 @@ class picture:
             image_editable = ImageDraw.Draw(my_image)
             image_editable.text((150, 440), achternaam_text, color2, font=last_font)
 
-            resultname = naam + achternaam + "-" + id + "-" + categorie +"_kaart.png"
-            my_image.save("results/kaarten/"+resultname)
-            print("id: " + id + ", Naam: " + naam + " | succesvol toegevoegd!")
-        else:
-            print("Something went wrong!")
+            #picture
+            if(p_im!= None):
+                my_image.paste(p_im,(148,712))
 
-def test(id, naam,achternaam,categorie):
+
+            resultname = id + "-" + naam + achternaam + "-" + categorie +"_kaart.png"
+            my_image.save("results/kaarten/"+resultname)
+
+def checkFields(id, naam,achternaam,categorie):
     if (id == "" or naam == "" or achternaam == "" or categorie == ""):
         return False
     else:
         return True
+
+def imposition():
+    lenFiles = len(os.listdir("results/kaarten"))
+    aantalpdfs = math.ceil(lenFiles / 7)
+    f = open('data.json', )
+    data = json.load(f)
+    index = data['indexpdf']
+    f.close()
+
+    for i in range(aantalpdfs):
+        pdf = Image.open("assets/templateA4.png")
+        pathlist = Path("results/kaarten").rglob('*.png')
+
+        count = 1
+
+        for path in pathlist:
+            path_in_str = str(path)
+            base = os.path.basename(path_in_str)
+            if (count == 1):
+
+                im = Image.open(path_in_str)
+                im = im.rotate(90, expand=True)
+                pdf.paste(im, (0, 2799))
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+
+            elif (count == 2):
+                im = Image.open(path_in_str)
+                pdf.paste(im, (0, 0))
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+
+            elif (count == 3):
+
+                im = Image.open(path_in_str)
+                pdf.paste(im, (709, 0))
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+
+            elif (count == 4):
+
+                im = Image.open(path_in_str)
+                pdf.paste(im, (1418, 0))
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+
+            elif (count == 5):
+
+                im = Image.open(path_in_str)
+                pdf.paste(im, (0, 1358))
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+
+            elif (count == 6):
+
+                im = Image.open(path_in_str)
+                pdf.paste(im, (709, 1358))
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+
+            elif (count == 7):
+
+                im = Image.open(path_in_str)
+                pdf.paste(im, (1418, 1358))
+                count = 0
+                shutil.move(path_in_str, "results/oude-kaarten/" + base)
+                break
+
+            count += 1
+        pdf = pdf.convert('RGB')
+        pdf.save("results/pdfs/" + str(index) + ".pdf")
+        index += 1
+        with open('data.json', 'r+') as file:
+            file_data = json.load(file)
+            file_data["indexpdf"] += 1
+            file.seek(0)
+            json.dump(file_data, file, indent=4)
