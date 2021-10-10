@@ -60,7 +60,7 @@ class gui:
         button_explore = Button(self.root, text="Browse Files",bg="#2f2f2f", bd=0,image=browseimage ,command=self.browseFiles)
         self.label_file_explorer.place(x=5,y=215)
         button_explore.place(x=240,y=20)
-        self.msg_lbl.place(x=280,y=215)
+        self.msg_lbl.place(x=115,y=225)
 
         searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
         searchimage = searchimage.subsample(115,115)
@@ -112,6 +112,8 @@ class gui:
             self.msg_lbl["text"] = "no files found!"
             self.msg_lbl["fg"] = "#f55b5b"
         else:
+            self.msg_lbl["text"] = "Sorting done!"
+            self.msg_lbl["fg"] = "#76c96b"
             imposition()
 
     # on a button click
@@ -124,30 +126,35 @@ class gui:
         self.newWindow.title("MFC")
         self.newWindow.iconbitmap("assets/logo.ico")
         self.newWindow.configure(bg='#434343')
+        self.newWindow.geometry("355x245")
+
+        image = PhotoImage(file='assets/gui/search-bg.png')
+
+        panel = Label(self.newWindow,image=image,borderwidth=0, highlightthickness=0)
+        panel.image = image
+        panel.place(x=0,y=0)
+
 
         self.newWindow.resizable(False,False)
         # sets the geometry of toplevel
 
         var_txt = StringVar(self.newWindow)
 
-        tk.Label(self.newWindow, text="Id:", bg='#434343', fg='#ffffff', font='Helvetica 12').grid(row=1)
-        self.lbl_id = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_id.grid(row=1,column=1)
-
-        tk.Label(self.newWindow, text="Naam:", bg='#434343', fg='#ffffff', font='Helvetica 12').grid(row=2)
+        self.lbl_id = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 13 bold')
+        self.lbl_id.place(x=250,y=60)
+        tk.Label(self.newWindow, text="Naam:", bg='#434343', fg='#ffffff', font='Helvetica 10').place(x=180,y=80)
         self.lbl_name = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_name.grid(row=2,column=1)
+        self.lbl_name.place(x=180,y=100)
 
-        tk.Label(self.newWindow, text="Achternaam:", bg='#434343', fg='#ffffff', font='Helvetica 12').grid(row=3)
+        tk.Label(self.newWindow, text="Achternaam:", bg='#434343', fg='#ffffff', font='Helvetica 10').place(x=180,y=130)
         self.lbl_lastname = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_lastname.grid(row=3, column=1)
+        self.lbl_lastname.place(x=180,y=150)
 
-        tk.Label(self.newWindow, text="Categorie:", bg='#434343', fg='#ffffff', font='Helvetica 12').grid(row=4)
+        tk.Label(self.newWindow, text="Categorie:", bg='#434343', fg='#ffffff', font='Helvetica 10').place(x=180,y=180)
         self.lbl_categorie = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_categorie.grid(row=4, column=1)
-
-        self.lbl_msg = tk.Label(self.newWindow,text="", fg='#ffffff', font='Helvetica 8')
-        self.lbl_msg.grid(row=6)
+        self.lbl_categorie.place(x=180,y=200)
+        self.lbl_msg = tk.Label(self.newWindow,text="",bg="#434343", font='Helvetica 8')
+        self.lbl_msg.place(x=250,y=220)
 
         self.photo = PhotoImage()
 
@@ -162,11 +169,11 @@ class gui:
         mmber = self.searchMember(p_id)
         if(mmber == False):
             self.lbl_msg["text"] = "Member not found!"
-            self.lbl_msg["bg"] = "#f55b5b"
+            self.lbl_msg["fg"] = "#f55b5b"
         else:
             self.lbl_msg["text"] = ""
             self.lbl_msg["bg"] = "#434343"
-            self.lbl_id["text"] = mmber.id
+            self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
             self.lbl_categorie["text"] = mmber.categorie
