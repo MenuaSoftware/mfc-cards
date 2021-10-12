@@ -1,6 +1,22 @@
--imposition message geven als gelukt
--gui search mooier maken
-
--import excel file met volgorde -> naam, achternaam, categorie-> categorie moet juist geschreven zijn
+-zoeken mensen , stel meerdere met zelfde naam, werking met pagina's, je moet naar volgende pagina kunnen gaan en vorige,
+heel simpel gwn de members is een array zetten en index veranderen met bv pijltje recht is index +1 en links is index-1
 
 -.exe bestand maken
+
+(-gui-> vergroten omzetten mss in QT als kan)
+
+uitbreiding:
+Dashboard alike
+Mongo connect databank omzetten in mongodb,
+-nakijken van betalingen,
+(-Betaling)
+
+
+-GUI
+
+Dashboard -> voorlopig hier mensen toevoegen
+Members -> zoeken naar mensen
+
+Payments -> betalingen nakijk zone <- LATER
+
+

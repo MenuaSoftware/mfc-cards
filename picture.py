@@ -4,6 +4,7 @@ import math
 import json
 from pathlib import Path
 import shutil
+import pandas as pd
 
 class picture:
     def __init__(self,p_id,p_naam,p_achternaam,p_categorie,p_im = None):
@@ -80,7 +81,9 @@ class picture:
 
             #picture
             if(p_im!= None):
-                my_image.paste(p_im,(148,712))
+                tt = Image.open(p_im)
+                my_image.paste(tt,(148,712))
+
 
 
             resultname = id + "-" + naam + achternaam + "-" + categorie +"_kaart.png"
@@ -162,3 +165,4 @@ def imposition():
             file_data["indexpdf"] += 1
             file.seek(0)
             json.dump(file_data, file, indent=4)
+

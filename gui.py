@@ -9,7 +9,6 @@ from picture import *
 import json
 from reportlab.lib.units import inch, cm
 
-
 class gui:
     def __init__(self):
         self.file_name = ""
@@ -54,6 +53,10 @@ class gui:
         browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
         browseimage = browseimage.subsample(20,20)
 
+        excelimage = PhotoImage(file=r'assets/gui/excel-btn.png')
+        excelimage = excelimage.subsample(20,20)
+
+
         self.msg_lbl = tk.Label(self.root, text="", bg='#434343', fg='#ffffff', font='Helvetica 8')
         # Create a File Explorer label
         self.label_file_explorer = Label(self.root, text="", bg='#434343', fg='#ffffff', font='Helvetica 6')
@@ -62,12 +65,15 @@ class gui:
         button_explore.place(x=240,y=20)
         self.msg_lbl.place(x=115,y=225)
 
+        btn_excel = Button(self.root, text="browse excel",bg="#2f2f2f", bd=0,image=excelimage ,command=self.readExcel)
+        btn_excel.place(x=200,y=20)
+
         searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
         searchimage = searchimage.subsample(115,115)
         button_search = Button(self.root,text="Zoeken",bg="#2f2f2f", bd=0,image=searchimage,command=self.openNewWindow)
         button_search.place(x=320,y=20)
 
-        OPTIONS = ["Volwassen", "Jeugd", "Vrouwen"]
+        self.OPTIONS = ["Volwassen", "Jeugd", "Vrouwen"]
 
         var_name = StringVar(self.root)
         var_last_name = StringVar(self.root)
@@ -76,8 +82,8 @@ class gui:
         e3 = tk.Entry(self.root, textvariable=var_last_name, bg='#ffffff', bd=0)
 
         var_categorie = StringVar(self.root)
-        var_categorie.set(OPTIONS[0])
-        o4 = OptionMenu(self.root, var_categorie, *OPTIONS)
+        var_categorie.set(self.OPTIONS[0])
+        o4 = OptionMenu(self.root, var_categorie, *self.OPTIONS)
 
         # Functie run
         buttonRun = Button(self.root, text="Maken", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
@@ -130,10 +136,9 @@ class gui:
 
         image = PhotoImage(file='assets/gui/search-bg.png')
 
-        panel = Label(self.newWindow,image=image,borderwidth=0, highlightthickness=0)
-        panel.image = image
-        panel.place(x=0,y=0)
-
+        panela = Label(self.newWindow,image=image,borderwidth=0, highlightthickness=0)
+        panela.image = image
+        panela.place(x=0,y=0)
 
         self.newWindow.resizable(False,False)
         # sets the geometry of toplevel
@@ -154,17 +159,150 @@ class gui:
         self.lbl_categorie = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
         self.lbl_categorie.place(x=180,y=200)
         self.lbl_msg = tk.Label(self.newWindow,text="",bg="#434343", font='Helvetica 8')
-        self.lbl_msg.place(x=250,y=220)
+        self.lbl_msg.place(x=180,y=220)
 
         self.photo = PhotoImage()
 
-        search_text = tk.Entry(self.newWindow, textvariable=var_txt, bg='#ffffff', bd=0)
-        search_text.grid(row=0,padx=10, pady=5)
+        search_text = tk.Entry(self.newWindow, textvariable=var_txt, bg='#ffffff', bd=0,width=18)
+        search_text.place(x=200,y=25)
 
-        btn_search = Button(self.newWindow,text="search",command=lambda :self.getInfo(var_txt.get()))
-        btn_search.grid(row=0,column=1)
+        searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
+        searchimage = searchimage.subsample(115, 115)
+
+        btn_search = Button(self.newWindow,text="Zoek", bg="#2f2f2f", bd=0, image=searchimage,command=lambda :self.getInfo(var_txt.get()))
+        btn_search.image = searchimage
+        btn_search.place(x=320,y=20)
+
+        addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
+        addimage = addimage.subsample(20,20)
+        btn_addimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=addimage,command=lambda :self.changeImage(self.currid))
+        btn_addimage.image = addimage
+        btn_addimage.place(x=10, y=13)
+
+        addcardimage = PhotoImage(file=r'assets/gui/addcard-btn.png')
+        addcardimage = addcardimage.subsample(20,20)
+        btn_addcardimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=addcardimage,command=lambda :self.addcardimage(self.currid))
+        btn_addcardimage.image = addcardimage
+        btn_addcardimage.place(x=50,y=13)
+
+        editimage = PhotoImage(file=r'assets/gui/edit-btn.png')
+        editimage = editimage.subsample(20,20)
+        self.btn_editimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=editimage,command=lambda :self.changeUser(self.currid))
+        self.btn_editimage.image = editimage
+        self.btn_editimage.place(x=90,y=13)
+
+    def saveEdit(self,p_id,p_name,p_lastname,p_categorie):
+        #hide everything -> all textboxes and unhide lbls
+        self.btn_saveimage.place_forget()
+        self.btn_editimage.place(x=90, y=13)
+        self.name_text.place_forget()
+        self.lastname_text.place_forget()
+        self.categorie_option.place_forget()
+
+        self.lbl_name["text"] = p_name
+        self.lbl_name.place(x=180,y=100)
+        
+        self.lbl_lastname["text"] = p_lastname
+        self.lbl_lastname.place(x=180,y=150)
+
+        self.lbl_categorie["text"] = p_categorie
+        self.lbl_categorie.place(x=180,y=200)
+        mber = self.searchMember(p_id)
+        #change json
+        with open('data.json') as file:
+            data = json.load(file)
+        for i in data['members']:
+            if mber.id == i['Id']:
+                i['Name'] = p_name
+                i['LastName'] = p_lastname
+                i['Categorie'] = p_categorie
+        with open('data.json', 'w') as file:
+            json.dump(data, file, indent=2)
+
+        #change member
+        mber.name = p_name
+        mber.lastname = p_lastname
+        mber.categorie = p_categorie
+
+    def changeUser(self,p_id):
+        mber = self.searchMember(p_id)
+        #hide all
+        self.btn_editimage.place_forget()
+        self.lbl_name.place_forget()
+        self.lbl_lastname.place_forget()
+        self.lbl_categorie.place_forget()
+
+        #make entry's
+        name_var = StringVar(self.newWindow)
+        self.name_text = tk.Entry(self.newWindow, textvariable=name_var, bg='#ffffff', bd=0,width=18)
+        self.name_text.insert(END, mber.name)
+        self.name_text.place(x=180,y=100)
+
+        lastname_var = StringVar(self.newWindow)
+        self.lastname_text = tk.Entry(self.newWindow, textvariable=lastname_var, bg='#ffffff', bd=0,width=18)
+        self.lastname_text.insert(END, mber.lastname)
+        self.lastname_text.place(x=180,y=150)
+
+        categorie_var = StringVar(self.newWindow)
+        for k in range(len(self.OPTIONS)):
+            if mber.categorie == self.OPTIONS[k]:
+                categorie_var.set(self.OPTIONS[k])
+
+        self.categorie_option = OptionMenu(self.newWindow, categorie_var, *self.OPTIONS)
+        self.categorie_option["bd"] = 0
+        self.categorie_option.place(x=180,y=200)
+
+        saveimage = PhotoImage(file=r'assets/gui/save-btn.png')
+        saveimage = saveimage.subsample(20,20)
+        self.btn_saveimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=saveimage,command=lambda: self.saveEdit(p_id,name_var.get(),lastname_var.get(),categorie_var.get()))
+        self.btn_saveimage.image = saveimage
+        self.btn_saveimage.place(x=90,y=13)
+
+    def addcardimage(self,p_id):
+        mber = self.searchMember(p_id)
+        if mber.foto == "":
+            picture(str(mber.id), mber.name, mber.lastname, mber.categorie)
+        else:
+            picture(str(mber.id), mber.name, mber.lastname, mber.categorie, mber.foto)
+        self.lbl_msg['text'] = "Succesvol aangemaakt!"
+        self.lbl_msg['fg'] = "#76c96b"
+
+    def changeImage(self,p_member):
+        p_member = p_member.capitalize()
+        mmber = self.searchMember(p_member)
+        if(mmber):
+            file_name = filedialog.askopenfilename(initialdir="/",title="Select a File",filetypes=(("PNG files","*.png*"),("all files","*.*")))
+            passA4 = Image.open(file_name)
+            width, height = passA4.size
+            im = passA4.crop((0, 0, width - 2067, height - 2977))
+            pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + '.png'
+            im.save(pic)
+            #toevoegen json
+            self.replaceFoto(mmber.id,pic)
+            #toevoegen member
+            mmber.foto = pic
+            im = im.resize((139, 178), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(im)
+            self.panel = Label(self.newWindow, image=img, borderwidth=0, highlightthickness=0)
+            self.panel.image = img
+            self.panel.place(x=20, y=57)
+            self.lbl_msg['text'] = "foto succesvol veranderd!"
+            self.lbl_msg['fg'] = "#76c96b"
+
+
+    def replaceFoto(self,p_id,p_picture):
+        with open('data.json') as file:
+            data = json.load(file)
+
+        for i in data['members']:
+            if p_id == i['Id']:
+                i['Picture'] = p_picture
+
+        with open('data.json', 'w') as file:
+            json.dump(data, file, indent=2)
 
     def getInfo(self,p_id):
+        self.currid = p_id
         p_id = p_id.capitalize()
         mmber = self.searchMember(p_id)
         if(mmber == False):
@@ -179,13 +317,14 @@ class gui:
             self.lbl_categorie["text"] = mmber.categorie
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
-                img = img.resize((97, 124), Image.ANTIALIAS)
+                img = img.resize((139, 178), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
-                self.panel = Label(self.newWindow, image=img)
+                self.panel = Label(self.newWindow, borderwidth=0, highlightthickness=0)
+                self.panel["image"] = img
                 self.panel.image = img
-                self.panel.grid(row=5)
+                self.panel.place(x=20,y=57)
             else:
-                self.panel.grid_forget()
+                self.panel.place_forget()
 
     def run(self,p_id, p_name, p_lastname, p_categorie):
         if (checkFields(p_id, p_name, p_lastname, p_categorie)):
@@ -234,6 +373,44 @@ class gui:
                     return i
         return False
 
+    def readExcel(self):
+        file = filedialog.askopenfilename(initialdir="/",title="Select a File",filetypes=(("EXCEL files","*.xlsx*"),("all files","*.*")))
+        df = pd.read_excel(file)
+        lenUs = len(df['Naam'])
+        for i in range(lenUs):
+            self.index += 1
+            p_id = self.index
+            p_name = df['Naam'][i]
+            p_lastname = df['Achternaam'][i]
+            p_categorie = df['Categorie'][i]
+
+            p_name = p_name.capitalize()
+            p_lastname = p_lastname.capitalize()
+            p_categorie = p_categorie.capitalize()
+
+            im = None
+            pic=""
+
+            mm = member(p_id, p_name, p_lastname, p_categorie, pic)
+            self.members.append(mm)
+
+            y = {
+                "Id": self.index,
+                "Name": p_name,
+                "LastName": p_lastname,
+                "Categorie": p_categorie,
+                "Picture": pic
+            }
+            write_json(y)
+            picture(str(p_id), p_name, p_lastname, p_categorie,im)
+        varind = StringVar()
+        varind.set(self.index+1)
+
+        self.indlabel['text'] = "#" + varind.get()
+        self.msg_lbl["fg"] = "#76c96b"
+        self.msg_lbl['text'] = "Succesvol allemaal toegevoegd"
+
+
 
 # function to add to JSON
 def write_json(new_data, filename='data.json'):
@@ -247,4 +424,6 @@ def write_json(new_data, filename='data.json'):
         file.seek(0)
         # convert back to json.
         json.dump(file_data, file, indent = 4)
+
+
 
