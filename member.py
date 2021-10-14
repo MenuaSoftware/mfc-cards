@@ -5,3 +5,7 @@ class member:
         self.lastname = p_lastname
         self.categorie = p_categorie
         self.foto = p_foto
+        # self.saldo = p_saldo
+        # self.totaalsaldo = p_totaalsaldo
+        # self.transacties = []
+        # self.paydate = p_paydate

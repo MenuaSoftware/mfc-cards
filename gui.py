@@ -110,7 +110,7 @@ class gui:
 
         self.lbl_count = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 13 bold')
         self.lbl_count["text"] = ""
-        self.lbl_count.place(x=555, y=458)
+
 
         self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
 
@@ -283,11 +283,18 @@ class gui:
         self.label_file_explorer.configure(text="File: " + base)
 
         self.imagewd.place(x=550,y=75)
-        passA4 = Image.open(self.file_name)
-        width, height = passA4.size
-        im = passA4.crop((0, 0, width - 2067, height - 2977))
-        im = im.resize((194, 248), Image.ANTIALIAS)
-        im = ImageTk.PhotoImage(im)
+
+        foto = Image.open(self.file_name)
+        width, height = foto.size
+        if (width == 2480 and height == 3508):
+            im = foto.crop((0, 0, width - 2067, height - 2977))
+            im = im.resize((194, 248), Image.ANTIALIAS)
+            im = ImageTk.PhotoImage(im)
+        else:
+            im = foto.crop((226, 353, width - 226, height - 353))
+            im = im.resize((194, 248), Image.ANTIALIAS)
+            im = ImageTk.PhotoImage(im)
+
 
         self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
         self.panel["image"] = im
@@ -413,11 +420,21 @@ class gui:
         mmber = self.searchMember(p_member)
         if(mmber):
             file_name = filedialog.askopenfilename(initialdir="/",title="Select a File",filetypes=(("PNG files","*.png*"),("all files","*.*")))
-            passA4 = Image.open(file_name)
-            width, height = passA4.size
-            im = passA4.crop((0, 0, width - 2067, height - 2977))
-            pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + '.png'
-            im.save(pic)
+
+            foto = Image.open(file_name)
+            width, height = foto.size
+            if (width == 2480 and height == 3508):
+                im = foto.crop((0, 0, width - 2067, height - 2977))
+                pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + '.png'
+                im.save(pic)
+                self.label_file_explorer["text"] = ""
+            else:
+                im = foto.crop((226, 353, width - 226, height - 353))
+                im = im.resize((413, 531), Image.ANTIALIAS)
+                pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + '.png'
+                im.save(pic)
+                self.label_file_explorer["text"] = ""
+
             #toevoegen json
             self.replaceFoto(mmber.id,pic)
             #toevoegen member
@@ -504,6 +521,7 @@ class gui:
                 self.panel.place_forget()
 
     def next(self,list,curr):
+        self.panel.place_forget()
         lengte = len(list)
         if(curr< (lengte)):#index begint met 1 bij curr
             self.searchcount +=1
@@ -527,8 +545,8 @@ class gui:
             else:
                 self.panel.place_forget()
 
-
     def left(self,list,curr):
+        self.panel.place_forget()
         if(curr > 1):#index begint met 1 bij curr
             self.searchcount -= 1
             self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
@@ -560,12 +578,19 @@ class gui:
             im = None
             pic=""
             if(self.file_name != ""):
-                passA4 = Image.open(self.file_name)
-                width, height = passA4.size
-                im = passA4.crop((0, 0, width - 2067, height - 2977))
-                pic = 'results/passfotos/' + str(p_id) + "-" + p_name + '.png'
-                im.save(pic)
-                self.label_file_explorer["text"] = ""
+                foto = Image.open(self.file_name)
+                width, height = foto.size
+                if(width == 2480 and height==3508):
+                    im = foto.crop((0, 0, width - 2067, height - 2977))
+                    pic = 'results/passfotos/' + str(p_id) + "-" + p_name + '.png'
+                    im.save(pic)
+                    self.label_file_explorer["text"] = ""
+                else:
+                    im = foto.crop((226, 353, width - 226, height - 353))
+                    im = im.resize((413, 531), Image.ANTIALIAS)
+                    pic = 'results/passfotos/' + str(p_id) + "-" + p_name + '.png'
+                    im.save(pic)
+                    self.label_file_explorer["text"] = ""
 
             p_name = p_name.capitalize()
             p_lastname = p_lastname.capitalize()

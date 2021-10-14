@@ -1,16 +1,21 @@
--zoeken mensen , stel meerdere met zelfde naam, werking met pagina's, je moet naar volgende pagina kunnen gaan en vorige,
-heel simpel gwn de members is een array zetten en index veranderen met bv pijltje recht is index +1 en links is index-1
+#gebruiker aanmaking
+-gebruiker aanmaken ook zeggen hoeveel betaald, om mee tegeven, aan totaalsaldo.
+-bij gebruiker aanmaken wordt er ook een transactie aangemaakt met hoeveel hij heeft betaald
+-aanmakingsdatum van gebruiker, dan kunnen we tellen vanaf dan 1 maand erna betalen
 
--.exe bestand maken
+#member venster
+-we kunnen de saldo zien hoeveel te betalen, bij zoeken.
+-bij zoeken toevoegen dat je iemand zijn saldo kan aanpassen, dus zeggen of hoeveel hij heeft betaald, stel saldo is 75, mss hij betaald 50 dan is saldo 25.
+-bij search toevoegen waneer de persoon moet betalen de volgende keer
 
+#background system
+-saldo van een persoon gaat omhoog met 35 volwassen 25 kinderen als de datum voorbij is, dus maal aantal keer dat de datum voorbij is,
+dus stel eerste maand je betaalt niet dan wordt saldo 35 en paydate zet naar volgende maand dan maar je saldo is nu 35, dan je betaalt weer niet
+dan is je saldo 75 en de maand weer volgende
 
+#dashboard venster
+-bij dashboard toevoegen lijst met mensen die nog niet hebben betaald. dus waar saldo van die persoon > is dan 0
 
-
-
-
-uitbreiding:
 -commentaar in code
--data table lezen vanuit json weergeven in tkinter members
-Mongo connect databank omzetten in mongodb,
--nakijken van betalingen,
-(-Betaling)
+
+-exe maken
