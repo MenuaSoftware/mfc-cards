@@ -14,6 +14,8 @@ class gui:
         self.file_name = ""
         self.members = []
         self.index = 0
+        self.searchcount = 1
+        self.searchlist = []
 
     def guiStart(self):
         f = open('data.json', )
@@ -54,15 +56,10 @@ class gui:
         self.membersselect = Button(self.root,image=membersiamge,borderwidth=0,highlightthickness=0,command=self.navMembers)
         self.membersselect.place(x=0,y=124)
 
-
         #createimage wd show
         crwd = PhotoImage(file="assets/gui/createmember-wd.png")
         self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0)
         self.labelcreate.place(x=204,y=72)
-
-
-
-
 
         #searchmember wd
         srchmb = PhotoImage(file="assets/gui/searchmember-wd.png")
@@ -80,7 +77,6 @@ class gui:
         self.lbl_name = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
         self.lbl_lastname = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
         self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
-        self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
 
         addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
         addimage = addimage.subsample(2,2)
@@ -97,14 +93,26 @@ class gui:
         self.btn_editimage = Button(self.root, bg="#ffffff", bd=0, image=editimage, command=lambda :self.changeUser(self.currid))
         self.btn_editimage.image = editimage
 
-
         self.btn_saveimage = Button()
         self.name_text = tk.Entry()
         self.lastname_text = tk.Entry()
         self.categorie_option = Button()
 
+        leftimage = PhotoImage(file=r'assets/gui/left-btn.png')
+        leftimage = leftimage.subsample(2,2)
+        self.btn_left = Button(self.root, bg="#ffffff", bd=0, image=leftimage,command= lambda: self.left(self.searchlist, self.searchcount))
+        self.btn_left.image = leftimage
 
+        rightimage = PhotoImage(file=r'assets/gui/right-btn.png')
+        rightimage = rightimage.subsample(2, 2)
+        self.btn_right = Button(self.root, bg="#ffffff", bd=0, image=rightimage,command= lambda: self.next(self.searchlist, self.searchcount))
+        self.btn_right.image = rightimage
 
+        self.lbl_count = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 13 bold')
+        self.lbl_count["text"] = ""
+        self.lbl_count.place(x=555, y=458)
+
+        self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
 
         browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
         browseimage = browseimage.subsample(1,1)
@@ -114,7 +122,6 @@ class gui:
 
         imagewd = PhotoImage(file="assets/gui/image-wd.png")
         self.imagewd = Label(self.root,image=imagewd,borderwidth=0,highlightthickness=0)
-
 
         self.msg_lbl = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
         # Create a File Explorer label
@@ -212,6 +219,9 @@ class gui:
         self.btn_addcardimage.place(x=313,y=100)
         self.btn_editimage.place(x=385,y=100)
 
+        self.lbl_count["text"] = ""
+        self.lbl_count.place(x=555, y=458)
+
     def navDashboard(self):
         #navbar members
         self.membersselect.place_forget()
@@ -248,6 +258,10 @@ class gui:
         self.panel.place_forget()
         self.lastname_text.place_forget()
         self.categorie_option.place_forget()
+
+        self.btn_left.place_forget()
+        self.btn_right.place_forget()
+        self.lbl_count.place_forget()
 
         #main wd
         self.labelcreate.place(x=204,y=72)
@@ -292,6 +306,9 @@ class gui:
             imposition()
 
     def saveEdit(self,p_id,p_name,p_lastname,p_categorie):
+        self.btn_left.place_forget()
+        self.btn_right.place_forget()
+        self.lbl_count["text"] = ""
         #hide everything -> all textboxes and unhide lbls
         self.btn_saveimage.place_forget()
         self.btn_editimage.place(x=385, y=100)
@@ -319,18 +336,35 @@ class gui:
         with open('data.json', 'w') as file:
             json.dump(data, file, indent=2)
 
-        # self.lbl_id.place(x=522,y=190)
-        # self.lbl_name.place(x=520,y=255)
-        # self.lbl_lastname.place(x=520,y=335)
-        # self.lbl_categorie.place(x=520,y=415)
-        # self.lbl_msg.place(x=520,y=460)
-
         #change member
         mber.name = p_name
         mber.lastname = p_lastname
         mber.categorie = p_categorie
 
+        mmber = self.searchlist
+
+        self.lbl_msg["text"] = ""
+        self.lbl_id["text"] = "#" + str(mmber[self.searchcount-1].id)
+        self.lbl_name["text"] = mmber[self.searchcount-1].name
+        self.lbl_lastname["text"] = mmber[self.searchcount-1].lastname
+        self.lbl_categorie["text"] = mmber[self.searchcount-1].categorie
+        if (mmber[self.searchcount-1].foto != ""):
+            img = Image.open(mmber[self.searchcount-1].foto)
+            img = img.resize((235, 303), Image.ANTIALIAS)
+            img = ImageTk.PhotoImage(img)
+            self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+            self.panel["image"] = img
+            self.panel.image = img
+            self.panel.place(x=257, y=189)
+
+        self.btn_left.place(x=530, y=460)
+        self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
+        self.btn_right.place(x=590, y=460)
+
     def changeUser(self,p_id):
+        self.btn_left.place_forget()
+        self.btn_right.place_forget()
+        self.lbl_count["text"] = ""
         mber = self.searchMember(p_id)
         #hide all
         self.btn_editimage.place_forget()
@@ -376,7 +410,6 @@ class gui:
         self.lbl_msg['fg'] = "#76c96b"
 
     def changeImage(self,p_member):
-        p_member = p_member.capitalize()
         mmber = self.searchMember(p_member)
         if(mmber):
             file_name = filedialog.askopenfilename(initialdir="/",title="Select a File",filetypes=(("PNG files","*.png*"),("all files","*.*")))
@@ -413,20 +446,100 @@ class gui:
         self.lbl_name["text"] = ""
         self.lbl_lastname["text"] = ""
         self.lbl_categorie["text"] = ""
+        self.lbl_count["text"] = ""
+        self.btn_left.place_forget()
+        self.btn_right.place_forget()
 
+        self.searchcount = 1
+        self.searchlist = []
 
-        self.currid = p_id
         p_id = p_id.capitalize()
-        mmber = self.searchMember(p_id)
+        mmber = self.searchmoremembers(p_id)
+
         if(mmber == False):
             self.lbl_msg["text"] = "Member not found!"
             self.lbl_msg["fg"] = "#f55b5b"
+        elif(isinstance(mmber,list)):
+            #show arrows to go left right etc:
+            self.currid = mmber[0].id
+            self.lbl_msg["text"] = ""
+            self.lbl_id["text"] = "#" + str(mmber[0].id)
+            self.lbl_name["text"] = mmber[0].name
+            self.lbl_lastname["text"] = mmber[0].lastname
+            self.lbl_categorie["text"] = mmber[0].categorie
+            if (mmber[0].foto != ""):
+                img = Image.open(mmber[0].foto)
+                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+                self.panel["image"] = img
+                self.panel.image = img
+                self.panel.place(x=257, y=189)
+
+
+            self.btn_left.place(x=530,y=460)
+            self.searchlist = mmber
+            self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
+            self.searchcount = 1
+            self.btn_right.place(x=590,y=460)
         else:
+            self.btn_left.place_forget()
+            self.btn_right.place_forget()
+            self.lbl_count["text"] = ""
             self.lbl_msg["text"] = ""
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
             self.lbl_categorie["text"] = mmber.categorie
+            self.currid = mmber.id
+            if(mmber.foto != ""):
+                img = Image.open(mmber.foto)
+                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+                self.panel["image"] = img
+                self.panel.image = img
+                self.panel.place(x=257,y=189)
+            else:
+                self.panel.place_forget()
+
+    def next(self,list,curr):
+        lengte = len(list)
+        if(curr< (lengte)):#index begint met 1 bij curr
+            self.searchcount +=1
+            self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
+            mmber = list[curr]
+            self.currid = mmber.id
+            self.lbl_msg["text"] = ""
+            self.lbl_id["text"] = "#" + str(mmber.id)
+            self.lbl_name["text"] = mmber.name
+            self.lbl_lastname["text"] = mmber.lastname
+            self.lbl_categorie["text"] = mmber.categorie
+            self.currid = mmber.id
+            if(mmber.foto != ""):
+                img = Image.open(mmber.foto)
+                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+                self.panel["image"] = img
+                self.panel.image = img
+                self.panel.place(x=257,y=189)
+            else:
+                self.panel.place_forget()
+
+
+    def left(self,list,curr):
+        if(curr > 1):#index begint met 1 bij curr
+            self.searchcount -= 1
+            self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
+            mmber = list[curr-2]
+            self.currid = mmber.id
+            self.lbl_msg["text"] = ""
+            self.lbl_id["text"] = "#" + str(mmber.id)
+            self.lbl_name["text"] = mmber.name
+            self.lbl_lastname["text"] = mmber.lastname
+            self.lbl_categorie["text"] = mmber.categorie
+            self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
                 img = img.resize((235, 303), Image.ANTIALIAS)
@@ -454,6 +567,9 @@ class gui:
                 im.save(pic)
                 self.label_file_explorer["text"] = ""
 
+            p_name = p_name.capitalize()
+            p_lastname = p_lastname.capitalize()
+
             mm = member(p_id, p_name, p_lastname, p_categorie, pic)
             self.members.append(mm)
 
@@ -474,6 +590,22 @@ class gui:
             self.msg_lbl["text"] = "Invalid fields!"
             self.msg_lbl["fg"] = "#f55b5b"
 
+    def searchmoremembers(self,p_id):
+        list = []
+        for i in self.members:
+            try:
+                if(i.id == int(p_id)):
+                    return i
+            except:
+                if(i.name == p_id):
+                    list.append(i)
+        if(len(list)>0):
+            if(len(list) == 1):
+                return list[0]
+            else:
+                return list
+        else:
+            return False
 
     def searchMember(self,p_id):
         for i in self.members:
@@ -521,8 +653,6 @@ class gui:
         self.indlabel['text'] = "#" + varind.get()
         self.msg_lbl["fg"] = "#76c96b"
         self.msg_lbl['text'] = "Succesvol allemaal toegevoegd"
-
-
 
 # function to add to JSON
 def write_json(new_data, filename='data.json'):

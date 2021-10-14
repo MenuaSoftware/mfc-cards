@@ -1,13 +1,13 @@
 {
-  "index": 0,
-  "indexpdf": 0,
-  "members": [
-    {
-      "Id": 0,
-      "Name": "Test",
-      "LastName": "Test",
-      "Categorie": "Volwassen",
-      "Picture": ""
-    }
-  ]
+    "index": 0,
+    "indexpdf": 0,
+    "members": [
+        {
+            "Id": 0,
+            "Name": "Test",
+            "LastName": "Test",
+            "Categorie": "Volwassen",
+            "Picture": ""
+        }
+    ]
 }
