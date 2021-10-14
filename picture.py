@@ -4,7 +4,6 @@ import math
 import json
 from pathlib import Path
 import shutil
-import pandas as pd
 
 class picture:
     def __init__(self,p_id,p_naam,p_achternaam,p_categorie,p_im = None):

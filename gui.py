@@ -7,7 +7,7 @@ from member import *
 from tkinter import *
 from picture import *
 import json
-from reportlab.lib.units import inch, cm
+import pandas as pd
 
 class gui:
     def __init__(self):
@@ -37,7 +37,7 @@ class gui:
         # Gui
         self.root = tk.Tk()
         self.root.title("Multi Fight Club")
-        self.root.iconbitmap("assets/logo.ico")
+        self.root.iconbitmap("assets/logoB.ico")
         self.root.configure(bg='#434343')
         self.root.geometry("1200x676+0+0")
 
