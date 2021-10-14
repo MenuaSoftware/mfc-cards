@@ -1,5 +1,5 @@
 {
-  "index": 2,
+  "index": 0,
   "indexpdf": 0,
   "members": [
     {
@@ -7,21 +7,7 @@
       "Name": "Test",
       "LastName": "Test",
       "Categorie": "Volwassen",
-      "Picture": "results/passfotos/0-Test.png"
-    },
-    {
-      "Id": 1,
-      "Name": "Menua",
-      "LastName": "Hovhannisyan",
-      "Categorie": "Vrouwen",
       "Picture": ""
-    },
-    {
-      "Id": 2,
-      "Name": "Gogo",
-      "LastName": "BOko",
-      "Categorie": "Volwassen",
-      "Picture": "results/passfotos/2-Gogo.png"
     }
   ]
 }

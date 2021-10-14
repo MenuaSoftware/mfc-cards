@@ -81,10 +81,9 @@ class picture:
 
             #picture
             if(p_im!= None):
-                tt = Image.open(p_im)
-                my_image.paste(tt,(148,712))
-
-
+                if(isinstance(p_im,str)):
+                    p_im = Image.open(p_im)
+                my_image.paste(p_im,(148,712))
 
             resultname = id + "-" + naam + achternaam + "-" + categorie +"_kaart.png"
             my_image.save("results/kaarten/"+resultname)

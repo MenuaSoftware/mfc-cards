@@ -3,20 +3,14 @@ heel simpel gwn de members is een array zetten en index veranderen met bv pijltj
 
 -.exe bestand maken
 
-(-gui-> vergroten omzetten mss in QT als kan)
+
+
+
+
 
 uitbreiding:
-Dashboard alike
+-commentaar in code
+-data table lezen vanuit json weergeven in tkinter members
 Mongo connect databank omzetten in mongodb,
 -nakijken van betalingen,
 (-Betaling)
-
-
--GUI
-
-Dashboard -> voorlopig hier mensen toevoegen
-Members -> zoeken naar mensen
-
-Payments -> betalingen nakijk zone <- LATER
-
-

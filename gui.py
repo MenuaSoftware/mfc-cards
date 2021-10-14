@@ -34,76 +34,233 @@ class gui:
 
         # Gui
         self.root = tk.Tk()
-        self.root.title("MFC")
+        self.root.title("Multi Fight Club")
         self.root.iconbitmap("assets/logo.ico")
         self.root.configure(bg='#434343')
-        self.root.geometry("355x245")
+        self.root.geometry("1200x676+0+0")
 
         # Add image file
-        bg = PhotoImage(file="assets/gui/main-bg.png")
+        bg = PhotoImage(file="assets/gui/theme.png")
 
         # Show image using label
         label1 = Label(self.root, image=bg,borderwidth=0, highlightthickness=0)
         label1.place(x=0, y=0)
 
-        tk.Label(self.root, text="Naam", bg='#434343', fg='#ffffff', font='Helvetica 12').place(x=50,y=65)
-        tk.Label(self.root, text="Achternaam", bg='#434343', fg='#ffffff', font='Helvetica 12').place(x=10,y=110)
-        tk.Label(self.root, text="Categorie", bg='#434343', fg='#ffffff', font='Helvetica 12').place(x=25,y=155)
+        dashboardimage = PhotoImage(file="assets/gui/Dashboard-select.png")
+        self.dashselect = Button(self.root,image=dashboardimage,borderwidth=0,highlightthickness=0,command = self.navDashboard)
+        self.dashselect.place(x=0,y=72)
 
-        browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
-        browseimage = browseimage.subsample(20,20)
-
-        excelimage = PhotoImage(file=r'assets/gui/excel-btn.png')
-        excelimage = excelimage.subsample(20,20)
+        membersiamge = PhotoImage(file="assets/gui/Members-unselect.png")
+        self.membersselect = Button(self.root,image=membersiamge,borderwidth=0,highlightthickness=0,command=self.navMembers)
+        self.membersselect.place(x=0,y=124)
 
 
-        self.msg_lbl = tk.Label(self.root, text="", bg='#434343', fg='#ffffff', font='Helvetica 8')
-        # Create a File Explorer label
-        self.label_file_explorer = Label(self.root, text="", bg='#434343', fg='#ffffff', font='Helvetica 6')
-        button_explore = Button(self.root, text="Browse Files",bg="#2f2f2f", bd=0,image=browseimage ,command=self.browseFiles)
-        self.label_file_explorer.place(x=5,y=215)
-        button_explore.place(x=240,y=20)
-        self.msg_lbl.place(x=115,y=225)
+        #createimage wd show
+        crwd = PhotoImage(file="assets/gui/createmember-wd.png")
+        self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0)
+        self.labelcreate.place(x=204,y=72)
 
-        btn_excel = Button(self.root, text="browse excel",bg="#2f2f2f", bd=0,image=excelimage ,command=self.readExcel)
-        btn_excel.place(x=200,y=20)
+
+
+
+
+        #searchmember wd
+        srchmb = PhotoImage(file="assets/gui/searchmember-wd.png")
+        self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0)
+
+        var_txt = StringVar(self.root)
+        self.search_text = tk.Entry(self.root, textvariable=var_txt, bg='#ffffff', bd=0,width=18)
 
         searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
-        searchimage = searchimage.subsample(115,115)
-        button_search = Button(self.root,text="Zoeken",bg="#2f2f2f", bd=0,image=searchimage,command=self.openNewWindow)
-        button_search.place(x=320,y=20)
+        searchimage = searchimage.subsample(1, 1)
+        self.btn_search = Button(self.root, text="Zoek", bg="#ffffff", bd=0, image=searchimage, command=lambda :self.getInfo(var_txt.get()))
+        self.btn_search.image = searchimage
+
+        self.lbl_id = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
+        self.lbl_name = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
+        self.lbl_lastname = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
+        self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
+        self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
+
+        addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
+        addimage = addimage.subsample(2,2)
+        self.btn_addimage = Button(self.root, bg="#ffffff", bd=0, image=addimage, command=lambda :self.changeImage(self.currid))
+        self.btn_addimage.image = addimage
+
+        addcardimage = PhotoImage(file=r'assets/gui/addcard-btn.png')
+        addcardimage = addcardimage.subsample(1,1)
+        self.btn_addcardimage = Button(self.root, bg="#ffffff", bd=0, image=addcardimage, command=lambda :self.addcardimage(self.currid))
+        self.btn_addcardimage.image = addcardimage
+
+        editimage = PhotoImage(file=r'assets/gui/edit-btn.png')
+        editimage = editimage.subsample(1,1)
+        self.btn_editimage = Button(self.root, bg="#ffffff", bd=0, image=editimage, command=lambda :self.changeUser(self.currid))
+        self.btn_editimage.image = editimage
+
+
+        self.btn_saveimage = Button()
+        self.name_text = tk.Entry()
+        self.lastname_text = tk.Entry()
+        self.categorie_option = Button()
+
+
+
+
+        browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
+        browseimage = browseimage.subsample(1,1)
+
+        excelimage = PhotoImage(file=r'assets/gui/excel-btn.png')
+        excelimage = excelimage.subsample(1,1)
+
+        imagewd = PhotoImage(file="assets/gui/image-wd.png")
+        self.imagewd = Label(self.root,image=imagewd,borderwidth=0,highlightthickness=0)
+
+
+        self.msg_lbl = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
+        # Create a File Explorer label
+        self.label_file_explorer = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 6')
+        self.button_explore = Button(self.root, text="Browse Files",bg="#ffffff", bd=0,image=browseimage ,command=self.browseFiles)
+        self.label_file_explorer.place(x=430,y=230)
+        self.button_explore.place(x=430,y=190)
+        self.msg_lbl.place(x=270,y=530)
+
+        self.btn_excel = Button(self.root, text="browse excel",bg="#ffffff", bd=0,image=excelimage ,command=self.readExcel)
+        self.btn_excel.place(x=396,y=555)
 
         self.OPTIONS = ["Volwassen", "Jeugd", "Vrouwen"]
 
         var_name = StringVar(self.root)
         var_last_name = StringVar(self.root)
 
-        e2 = tk.Entry(self.root, textvariable=var_name, bg='#ffffff', bd=0)
-        e3 = tk.Entry(self.root, textvariable=var_last_name, bg='#ffffff', bd=0)
+        self.e2 = tk.Entry(self.root, textvariable=var_name, bg='#ffffff', highlightthickness=2,bd=0)
+        self.e2.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
+        self.e3 = tk.Entry(self.root, textvariable=var_last_name, bg='#ffffff', highlightthickness=2 ,bd=0)
+        self.e3.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
 
         var_categorie = StringVar(self.root)
         var_categorie.set(self.OPTIONS[0])
-        o4 = OptionMenu(self.root, var_categorie, *self.OPTIONS)
+        self.o4 = OptionMenu(self.root, var_categorie, *self.OPTIONS)
 
         # Functie run
-        buttonRun = Button(self.root, text="Maken", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
-        buttonRun.place(x=115,y=200,width=128)
+        self.buttonRun = Button(self.root, text="Create", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
+
+        self.buttonRun.place(x=270,y=555,width=105,height=38)
 
         sortimage = PhotoImage(file=r'assets/gui/sort-btn.png')
-        sortimage = sortimage.subsample(8,8)
-        buttonImposition = Button(self.root, text="Imposition", bg="#2f2f2f", bd=0,image=sortimage,command=lambda: self.impos())
-        buttonImposition.place(x=280,y=20)
+        sortimage = sortimage.subsample(1,1)
+        self.buttonImposition = Button(self.root, text="Imposition", bg="#ffffff", bd=0,image=sortimage,command=lambda: self.impos())
+        self.buttonImposition.place(x=445,y=555)
 
         indrs = self.index +1
-        self.indlabel = tk.Label(self.root, text="#"+str(indrs), bg='#2f2f2f', fg='#ffffff', pady=5, font='assets/TTOctosquaresEXP-BoldIt.ttf 16 bold')
-        self.indlabel.place(x=15,y=12)
+        self.indlabel = tk.Label(self.root, text="#"+str(indrs), bg='#ffffff', fg='#1f1f1f', pady=5, font='assets/SourceSansPro-Bold.ttf')
+        self.indlabel.place(x=270,y=190)
 
-        e2.place(x=115,y=65,width=128,height=30)
-        e3.place(x=115,y=110,width=128,height=30)
-        o4.place(x=115,y=155,width=128,height=30)
-        o4["bd"] = 0
+        self.e2.place(x=270,y=276,width=210,height=38)
+        self.e3.place(x=270,y=381,width=210,height=38)
+        self.o4.place(x=270,y=486,width=210,height=38)
+        self.o4["highlightthickness"] = 2
+        self.o4.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
+        self.o4["bd"] = 0
+
+        self.panel = Label()
+
         self.root.resizable(False, False)
         self.root.mainloop()
+
+    def navMembers(self):
+        #navbar dashboard
+        self.dashselect.place_forget()
+        dashimage = PhotoImage(file="assets/gui/Dashboard-unselect.png")
+        self.dashselect.image = dashimage
+        self.dashselect["image"]=dashimage
+        self.dashselect.place(x=0,y=72)
+
+        #navbar members
+        self.membersselect.place_forget()
+        membimage = PhotoImage(file="assets/gui/Members-select.png")
+        self.membersselect.image = membimage
+        self.membersselect["image"] = membimage
+        self.membersselect.place(x=0,y=124)
+
+        #hiding main dash
+        self.labelcreate.place_forget()
+        self.e3.place_forget()
+        self.e2.place_forget()
+        self.o4.place_forget()
+        self.msg_lbl.place_forget()
+        self.label_file_explorer.place_forget()
+        self.indlabel.place_forget()
+        self.buttonRun.place_forget()
+        self.buttonImposition.place_forget()
+        self.button_explore.place_forget()
+        self.btn_excel.place_forget()
+        self.imagewd.place_forget()
+        self.panel.place_forget()
+
+        #showing member dash
+        self.labelsearch.place(x=204, y=72)
+        self.search_text.place(x=460,y=110,width=200)
+        self.btn_search.place(x=688,y=100)
+
+        self.lbl_id.place(x=522,y=190)
+        self.lbl_name.place(x=520,y=255)
+        self.lbl_lastname.place(x=520,y=335)
+        self.lbl_categorie.place(x=520,y=415)
+        self.lbl_msg.place(x=520,y=460)
+
+        self.btn_addimage.place(x=248,y=108)
+        self.btn_addcardimage.place(x=313,y=100)
+        self.btn_editimage.place(x=385,y=100)
+
+    def navDashboard(self):
+        #navbar members
+        self.membersselect.place_forget()
+        membimage = PhotoImage(file="assets/gui/Members-unselect.png")
+        self.membersselect.image = membimage
+        self.membersselect["image"] = membimage
+        self.membersselect.place(x=0,y=124)
+
+        #navbar dashboard
+        self.dashselect.place_forget()
+        dashimage = PhotoImage(file="assets/gui/Dashboard-select.png")
+        self.dashselect.image = dashimage
+        self.dashselect["image"]=dashimage
+        self.dashselect.place(x=0,y=72)
+
+        #hiding members dash
+        self.labelsearch.place_forget()
+        self.search_text.place_forget()
+        self.btn_search.place_forget()
+
+        self.currid = 0
+        self.lbl_id["text"] = ""
+        self.lbl_name["text"] = ""
+        self.lbl_lastname["text"] = ""
+        self.lbl_categorie["text"] = ""
+        self.lbl_msg.place_forget()
+
+        self.btn_addimage.place_forget()
+        self.btn_addcardimage.place_forget()
+        self.btn_editimage.place_forget()
+
+        self.btn_saveimage.place_forget()
+        self.name_text.place_forget()
+        self.panel.place_forget()
+        self.lastname_text.place_forget()
+        self.categorie_option.place_forget()
+
+        #main wd
+        self.labelcreate.place(x=204,y=72)
+        self.e3.place(x=270,y=381,width=210,height=38)
+        self.e2.place(x=270,y=276,width=210,height=38)
+        self.o4.place(x=270,y=486,width=210,height=38)
+        self.msg_lbl.place(x=270,y=530)
+        self.label_file_explorer.place(x=430,y=230)
+        self.indlabel.place(x=270,y=190)
+        self.buttonRun.place(x=270,y=555,width=105,height=38)
+        self.buttonImposition.place(x=445,y=555)
+        self.button_explore.place(x=430,y=190)
+        self.btn_excel.place(x=396,y=555)
 
     def browseFiles(self):
         self.file_name = filedialog.askopenfilename(initialdir="/",title="Select a File",filetypes=(("PNG files","*.png*"),("all files","*.*")))
@@ -111,6 +268,18 @@ class gui:
         # Change label contents
         self.label_file_explorer.configure(text="File: " + base)
 
+        self.imagewd.place(x=550,y=75)
+        passA4 = Image.open(self.file_name)
+        width, height = passA4.size
+        im = passA4.crop((0, 0, width - 2067, height - 2977))
+        im = im.resize((194, 248), Image.ANTIALIAS)
+        im = ImageTk.PhotoImage(im)
+
+        self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+        self.panel["image"] = im
+        self.panel.image = im
+        self.panel.place(x=605, y=130)
+        #foto opladen
 
     def impos(self):
         lenFiles = len(os.listdir("results/kaarten"))
@@ -122,91 +291,22 @@ class gui:
             self.msg_lbl["fg"] = "#76c96b"
             imposition()
 
-    # on a button click
-    def openNewWindow(self):
-
-        self.newWindow = Toplevel(self.root)
-
-        # sets the title of the
-        # Toplevel widget
-        self.newWindow.title("MFC")
-        self.newWindow.iconbitmap("assets/logo.ico")
-        self.newWindow.configure(bg='#434343')
-        self.newWindow.geometry("355x245")
-
-        image = PhotoImage(file='assets/gui/search-bg.png')
-
-        panela = Label(self.newWindow,image=image,borderwidth=0, highlightthickness=0)
-        panela.image = image
-        panela.place(x=0,y=0)
-
-        self.newWindow.resizable(False,False)
-        # sets the geometry of toplevel
-
-        var_txt = StringVar(self.newWindow)
-
-        self.lbl_id = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 13 bold')
-        self.lbl_id.place(x=250,y=60)
-        tk.Label(self.newWindow, text="Naam:", bg='#434343', fg='#ffffff', font='Helvetica 10').place(x=180,y=80)
-        self.lbl_name = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_name.place(x=180,y=100)
-
-        tk.Label(self.newWindow, text="Achternaam:", bg='#434343', fg='#ffffff', font='Helvetica 10').place(x=180,y=130)
-        self.lbl_lastname = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_lastname.place(x=180,y=150)
-
-        tk.Label(self.newWindow, text="Categorie:", bg='#434343', fg='#ffffff', font='Helvetica 10').place(x=180,y=180)
-        self.lbl_categorie = tk.Label(self.newWindow, text="", bg='#434343', fg='#ffffff', font='Helvetica 12 bold')
-        self.lbl_categorie.place(x=180,y=200)
-        self.lbl_msg = tk.Label(self.newWindow,text="",bg="#434343", font='Helvetica 8')
-        self.lbl_msg.place(x=180,y=220)
-
-        self.photo = PhotoImage()
-
-        search_text = tk.Entry(self.newWindow, textvariable=var_txt, bg='#ffffff', bd=0,width=18)
-        search_text.place(x=200,y=25)
-
-        searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
-        searchimage = searchimage.subsample(115, 115)
-
-        btn_search = Button(self.newWindow,text="Zoek", bg="#2f2f2f", bd=0, image=searchimage,command=lambda :self.getInfo(var_txt.get()))
-        btn_search.image = searchimage
-        btn_search.place(x=320,y=20)
-
-        addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
-        addimage = addimage.subsample(20,20)
-        btn_addimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=addimage,command=lambda :self.changeImage(self.currid))
-        btn_addimage.image = addimage
-        btn_addimage.place(x=10, y=13)
-
-        addcardimage = PhotoImage(file=r'assets/gui/addcard-btn.png')
-        addcardimage = addcardimage.subsample(20,20)
-        btn_addcardimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=addcardimage,command=lambda :self.addcardimage(self.currid))
-        btn_addcardimage.image = addcardimage
-        btn_addcardimage.place(x=50,y=13)
-
-        editimage = PhotoImage(file=r'assets/gui/edit-btn.png')
-        editimage = editimage.subsample(20,20)
-        self.btn_editimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=editimage,command=lambda :self.changeUser(self.currid))
-        self.btn_editimage.image = editimage
-        self.btn_editimage.place(x=90,y=13)
-
     def saveEdit(self,p_id,p_name,p_lastname,p_categorie):
         #hide everything -> all textboxes and unhide lbls
         self.btn_saveimage.place_forget()
-        self.btn_editimage.place(x=90, y=13)
+        self.btn_editimage.place(x=385, y=100)
         self.name_text.place_forget()
         self.lastname_text.place_forget()
         self.categorie_option.place_forget()
 
         self.lbl_name["text"] = p_name
-        self.lbl_name.place(x=180,y=100)
+        self.lbl_name.place(x=520,y=255)
         
         self.lbl_lastname["text"] = p_lastname
-        self.lbl_lastname.place(x=180,y=150)
+        self.lbl_lastname.place(x=520,y=335)
 
         self.lbl_categorie["text"] = p_categorie
-        self.lbl_categorie.place(x=180,y=200)
+        self.lbl_categorie.place(x=520,y=415)
         mber = self.searchMember(p_id)
         #change json
         with open('data.json') as file:
@@ -218,6 +318,12 @@ class gui:
                 i['Categorie'] = p_categorie
         with open('data.json', 'w') as file:
             json.dump(data, file, indent=2)
+
+        # self.lbl_id.place(x=522,y=190)
+        # self.lbl_name.place(x=520,y=255)
+        # self.lbl_lastname.place(x=520,y=335)
+        # self.lbl_categorie.place(x=520,y=415)
+        # self.lbl_msg.place(x=520,y=460)
 
         #change member
         mber.name = p_name
@@ -233,30 +339,32 @@ class gui:
         self.lbl_categorie.place_forget()
 
         #make entry's
-        name_var = StringVar(self.newWindow)
-        self.name_text = tk.Entry(self.newWindow, textvariable=name_var, bg='#ffffff', bd=0,width=18)
+        name_var = StringVar(self.root)
+        self.name_text = tk.Entry(self.root, textvariable=name_var, bg='#ffffff', bd=0,highlightthickness=2 ,width=18)
+        self.name_text.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
         self.name_text.insert(END, mber.name)
-        self.name_text.place(x=180,y=100)
+        self.name_text.place(x=520,y=255,width=200,height=40)
 
-        lastname_var = StringVar(self.newWindow)
-        self.lastname_text = tk.Entry(self.newWindow, textvariable=lastname_var, bg='#ffffff', bd=0,width=18)
+        lastname_var = StringVar(self.root)
+        self.lastname_text = tk.Entry(self.root, textvariable=lastname_var, bg='#ffffff', highlightthickness=2, bd=0, width=18)
+        self.lastname_text.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
         self.lastname_text.insert(END, mber.lastname)
-        self.lastname_text.place(x=180,y=150)
+        self.lastname_text.place(x=520,y=335,width=200,height=40)
 
-        categorie_var = StringVar(self.newWindow)
+        categorie_var = StringVar(self.root)
         for k in range(len(self.OPTIONS)):
             if mber.categorie == self.OPTIONS[k]:
                 categorie_var.set(self.OPTIONS[k])
 
-        self.categorie_option = OptionMenu(self.newWindow, categorie_var, *self.OPTIONS)
+        self.categorie_option = OptionMenu(self.root, categorie_var, *self.OPTIONS)
         self.categorie_option["bd"] = 0
-        self.categorie_option.place(x=180,y=200)
+        self.categorie_option.place(x=520,y=415)
 
         saveimage = PhotoImage(file=r'assets/gui/save-btn.png')
-        saveimage = saveimage.subsample(20,20)
-        self.btn_saveimage = Button(self.newWindow,bg="#2f2f2f",bd=0,image=saveimage,command=lambda: self.saveEdit(p_id,name_var.get(),lastname_var.get(),categorie_var.get()))
+        saveimage = saveimage.subsample(1,1)
+        self.btn_saveimage = Button(self.root, bg="#ffffff", bd=0, image=saveimage, command=lambda: self.saveEdit(p_id, name_var.get(), lastname_var.get(), categorie_var.get()))
         self.btn_saveimage.image = saveimage
-        self.btn_saveimage.place(x=90,y=13)
+        self.btn_saveimage.place(x=385,y=100)
 
     def addcardimage(self,p_id):
         mber = self.searchMember(p_id)
@@ -281,14 +389,12 @@ class gui:
             self.replaceFoto(mmber.id,pic)
             #toevoegen member
             mmber.foto = pic
-            im = im.resize((139, 178), Image.ANTIALIAS)
+            im = im.resize((235, 303), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(im)
-            self.panel = Label(self.newWindow, image=img, borderwidth=0, highlightthickness=0)
+            self.panel["image"] = img
             self.panel.image = img
-            self.panel.place(x=20, y=57)
             self.lbl_msg['text'] = "foto succesvol veranderd!"
             self.lbl_msg['fg'] = "#76c96b"
-
 
     def replaceFoto(self,p_id,p_picture):
         with open('data.json') as file:
@@ -302,6 +408,13 @@ class gui:
             json.dump(data, file, indent=2)
 
     def getInfo(self,p_id):
+        self.panel.place_forget()
+        self.lbl_id["text"] = ""
+        self.lbl_name["text"] = ""
+        self.lbl_lastname["text"] = ""
+        self.lbl_categorie["text"] = ""
+
+
         self.currid = p_id
         p_id = p_id.capitalize()
         mmber = self.searchMember(p_id)
@@ -310,19 +423,18 @@ class gui:
             self.lbl_msg["fg"] = "#f55b5b"
         else:
             self.lbl_msg["text"] = ""
-            self.lbl_msg["bg"] = "#434343"
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
             self.lbl_categorie["text"] = mmber.categorie
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
-                img = img.resize((139, 178), Image.ANTIALIAS)
+                img = img.resize((235, 303), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
-                self.panel = Label(self.newWindow, borderwidth=0, highlightthickness=0)
+                self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
                 self.panel["image"] = img
                 self.panel.image = img
-                self.panel.place(x=20,y=57)
+                self.panel.place(x=257,y=189)
             else:
                 self.panel.place_forget()
 
