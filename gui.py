@@ -1,8 +1,13 @@
 import tkinter as tk
+
+from dateutil import relativedelta
+from datetime import datetime
+from datetime import date
+
 from tkinter import filedialog
 
 from PIL import ImageTk
-
+from transactie import *
 from member import *
 from tkinter import *
 from picture import *
@@ -16,19 +21,29 @@ class gui:
         self.index = 0
         self.searchcount = 1
         self.searchlist = []
+        self.transactie_id = 0
 
     def guiStart(self):
         f = open('data.json', )
         data = json.load(f)
 
         self.index = data['index']
+        self.transactie_id = data['indextransacties']
         for i in data['members']:
             p_id = i['Id']
             p_name = i['Name']
             p_lastname = i['LastName']
             p_categorie = i['Categorie']
             p_foto = i['Picture']
-            mm = member(p_id, p_name, p_lastname, p_categorie,p_foto)
+            p_saldo = i['Saldo']
+            p_totaalsaldo = i['TotaalSaldo']
+            p_transacties = i['Transacties']
+            p_paydate = i['PayDate']
+            payd = datetime.strptime(p_paydate, '%d-%m-%Y').date()
+            trans = self.stringToList(p_transacties)
+
+
+            mm = member(p_id, p_name, p_lastname, p_categorie,p_saldo,p_totaalsaldo,trans,payd,p_foto)
             self.members.append(mm)
 
         # Closing file
@@ -110,9 +125,25 @@ class gui:
 
         self.lbl_count = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 13 bold')
         self.lbl_count["text"] = ""
-
-
         self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
+
+        #saldo
+        self.lbl_saldo = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
+        self.lbl_totaalsaldo = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
+        self.laatstbetaald = Label(self.root, text="", bg='#ffffff', fg='#eba73b', font='Helvetica 14 bold')
+
+        #transactie maken
+        self.lbl_transmsg = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
+        transactieimage = PhotoImage(file=r'assets/gui/createtrans-btn.png')
+        transactieimage = transactieimage.subsample(1, 1)
+        self.btn_transactie = Button(self.root, bg="#ffffff", bd=0, image=transactieimage)
+        var_transactie = StringVar(self.root)
+        self.transactie_entry = Entry(self.root, textvariable=var_transactie, bg='#ffffff', highlightthickness=2,bd=0)
+        self.transactie_entry.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
+
+
+
+
 
         browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
         browseimage = browseimage.subsample(1,1)
@@ -215,12 +246,22 @@ class gui:
         self.lbl_categorie.place(x=520,y=415)
         self.lbl_msg.place(x=520,y=460)
 
+        self.lbl_transmsg["text"] = ""
+        self.lbl_saldo["text"] = ""
+        self.lbl_totaalsaldo["text"] = ""
+        self.laatstbetaald["text"] = ""
+        self.lbl_saldo.place(x=890,y=217)
+        self.lbl_totaalsaldo.place(x=985, y=296)
+        self.laatstbetaald.place(x=925,y=254)
+
         self.btn_addimage.place(x=248,y=108)
         self.btn_addcardimage.place(x=313,y=100)
         self.btn_editimage.place(x=385,y=100)
 
         self.lbl_count["text"] = ""
         self.lbl_count.place(x=555, y=458)
+        self.btn_transactie.place(x=990,y=445)
+        self.transactie_entry.place(x=830,y=448,width=150,height=40)
 
     def navDashboard(self):
         #navbar members
@@ -263,6 +304,14 @@ class gui:
         self.btn_right.place_forget()
         self.lbl_count.place_forget()
 
+        self.lbl_saldo.place_forget()
+        self.lbl_totaalsaldo.place_forget()
+        self.laatstbetaald.place_forget()
+
+        self.lbl_transmsg.place_forget()
+        self.btn_transactie.place_forget()
+        self.transactie_entry.place_forget()
+
         #main wd
         self.labelcreate.place(x=204,y=72)
         self.e3.place(x=270,y=381,width=210,height=38)
@@ -276,7 +325,24 @@ class gui:
         self.button_explore.place(x=430,y=190)
         self.btn_excel.place(x=396,y=555)
 
+    def transactieCreate(self,amount,p_id):
+        print("h")
+        #aanmaken transactie
+        today = date.today()
+        today = today.strftime('%d-%m-%Y')
+        tt = transactie(self.transactie_id,p_id,amount,today)
+        #aanpassen json
+
+
+        #aanpassen member
+
+        #aanpassen gui
+
+        #if saldo is back 0, dan datum terug naar volgende maand
+
+
     def browseFiles(self):
+        self.panel.place_forget()
         self.file_name = filedialog.askopenfilename(initialdir="/",title="Select a File",filetypes=(("PNG files","*.png*"),("all files","*.*")))
         base = os.path.basename(self.file_name)
         # Change label contents
@@ -331,6 +397,7 @@ class gui:
 
         self.lbl_categorie["text"] = p_categorie
         self.lbl_categorie.place(x=520,y=415)
+
         mber = self.searchMember(p_id)
         #change json
         with open('data.json') as file:
@@ -464,6 +531,10 @@ class gui:
         self.lbl_lastname["text"] = ""
         self.lbl_categorie["text"] = ""
         self.lbl_count["text"] = ""
+        self.lbl_saldo["text"] = ""
+        self.lbl_totaalsaldo["text"] = ""
+        self.laatstbetaald["text"] = ""
+
         self.btn_left.place_forget()
         self.btn_right.place_forget()
 
@@ -484,6 +555,13 @@ class gui:
             self.lbl_name["text"] = mmber[0].name
             self.lbl_lastname["text"] = mmber[0].lastname
             self.lbl_categorie["text"] = mmber[0].categorie
+            if(mmber[0].saldo>0):
+                self.lbl_saldo["fg"] = "#f55b5b"
+            else:
+                self.lbl_saldo["fg"] = "#1F1F1F"
+            self.lbl_saldo["text"] = mmber[0].saldo
+            self.lbl_totaalsaldo["text"] = mmber[0].totaalsaldo
+            self.laatstbetaald["text"] = mmber[0].paydate
             if (mmber[0].foto != ""):
                 img = Image.open(mmber[0].foto)
                 img = img.resize((235, 303), Image.ANTIALIAS)
@@ -508,6 +586,13 @@ class gui:
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
             self.lbl_categorie["text"] = mmber.categorie
+            if(mmber.saldo>0):
+                self.lbl_saldo["fg"] = "#f55b5b"
+            else:
+                self.lbl_saldo["fg"] = "#1F1F1F"
+            self.lbl_saldo["text"] = mmber.saldo
+            self.lbl_totaalsaldo["text"] = mmber.totaalsaldo
+            self.laatstbetaald["text"] = mmber.paydate
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
@@ -533,6 +618,9 @@ class gui:
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
             self.lbl_categorie["text"] = mmber.categorie
+            self.lbl_saldo["text"] = mmber.saldo
+            self.lbl_totaalsaldo["text"] = mmber.totaalsaldo
+
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
@@ -557,6 +645,8 @@ class gui:
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
             self.lbl_categorie["text"] = mmber.categorie
+            self.lbl_saldo["text"] = mmber.saldo
+            self.lbl_totaalsaldo["text"] = mmber.totaalsaldo
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
@@ -595,18 +685,46 @@ class gui:
             p_name = p_name.capitalize()
             p_lastname = p_lastname.capitalize()
 
-            mm = member(p_id, p_name, p_lastname, p_categorie, pic)
+            nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
+            if(p_categorie == "Jeugd"):
+                amount = 85
+            else:
+                amount = 110
+            today = date.today()
+            today = today.strftime('%d-%m-%Y')
+            tt = transactie(self.transactie_id,p_id,amount,today)
+            trans = []
+            trans.append(tt)
+            shortDate = nextmonth.strftime('%d-%m-%Y')
+            mm = member(p_id, p_name, p_lastname, p_categorie,0,amount,tt,shortDate,pic)
             self.members.append(mm)
 
             self.indlabel["text"] = "#"+varind.get()
+            tr = []
+            tr.append(tt.id)
+            transstring = listToString(tr)
+
+
+
             y = {
                 "Id": self.index,
                 "Name": p_name,
                 "LastName": p_lastname,
                 "Categorie": p_categorie,
-                "Picture": pic
+                "Picture": pic,
+                "Saldo": 0,
+                "TotaalSaldo": amount,
+                "Transacties": transstring,
+                "PayDate": shortDate
             }
             write_json(y)
+            x = {
+                "Id": tt.id,
+                "Member_Id": tt.member_id,
+                "Amount": tt.amount,
+                "Date": today
+            }
+            write_json_transactie(x)
             self.msg_lbl["text"] = p_name + " toegevoegd!"
             self.msg_lbl["fg"] = "#76c96b"
             picture(str(p_id), p_name, p_lastname, p_categorie,im)
@@ -660,17 +778,45 @@ class gui:
             im = None
             pic=""
 
-            mm = member(p_id, p_name, p_lastname, p_categorie, pic)
+            nextmonth = datetime.date.today() + relativedelta.relativedelta(months=1)
+            if(p_categorie == "Jeugd"):
+                amount = 85
+            else:
+                amount = 110
+            today = date.today()
+            today = today.strftime('%d-%m-%Y')
+            tt = transactie(self.transactie_id,p_id,amount,today)
+            trans = []
+            trans.append(tt)
+            shortDate = nextmonth.strftime('%d-%m-%Y')
+            mm = member(p_id, p_name, p_lastname, p_categorie,0,amount,tt,shortDate,pic)
             self.members.append(mm)
+
+            tr = []
+            tr.append(tt.id)
+            transstring = listToString(tr)
+
 
             y = {
                 "Id": self.index,
                 "Name": p_name,
                 "LastName": p_lastname,
                 "Categorie": p_categorie,
-                "Picture": pic
+                "Picture": pic,
+                "Saldo": 0,
+                "TotaalSaldo": amount,
+                "Transacties": transstring,
+                "PayDate": shortDate
             }
             write_json(y)
+
+            x = {
+                "Id": tt.id,
+                "Member_Id": tt.member_id,
+                "Amount": tt.amount,
+                "Date": today
+            }
+            write_json_transactie(x)
             picture(str(p_id), p_name, p_lastname, p_categorie,im)
         varind = StringVar()
         varind.set(self.index+1)
@@ -678,6 +824,13 @@ class gui:
         self.indlabel['text'] = "#" + varind.get()
         self.msg_lbl["fg"] = "#76c96b"
         self.msg_lbl['text'] = "Succesvol allemaal toegevoegd"
+
+    def stringToList(self,p_string):
+        list = []
+        for i in p_string:
+            if(i!="[" and i!="," and i!="]"):
+                list.append(int(i))
+        return list
 
 # function to add to JSON
 def write_json(new_data, filename='data.json'):
@@ -691,6 +844,26 @@ def write_json(new_data, filename='data.json'):
         file.seek(0)
         # convert back to json.
         json.dump(file_data, file, indent = 4)
+
+def write_json_transactie(new_data,filename='data.json'):
+    with open(filename,'r+') as file:
+        file_data = json.load(file)
+        file_data["transacties"].append(new_data)
+        file_data["indextransacties"] += 1
+        file.seek(0)
+        json.dump(file_data,file,indent=4)
+
+
+def listToString(list):
+    string ="["
+    for i in range(len(list)):
+        string += str(list[i])
+        if(i==len(list)-1):
+            string+= "]"
+        else:
+            string +=","
+    return string
+
 
 
 

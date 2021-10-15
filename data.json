@@ -1,26 +1,109 @@
 {
-  "index": 0,
-  "indexpdf": 0,
-  "indextransacties": 0,
-  "members": [
-    {
-      "Id": 0,
-      "Name": "Test",
-      "LastName": "Test",
-      "Categorie": "Volwassen",
-      "Picture": "",
-      "Saldo": 0,
-      "TotaalSaldo": 110,
-      "Transacties": [0],
-      "PayDate": "14/11/2021"
-    }
-  ],
-  "transacties": [
-    {
-      "Id": 0,
-      "Member_Id": 0,
-      "Amount": 110,
-      "Date": "14/10/2021"
-    }
-  ]
+    "index": 7,
+    "indexpdf": 0,
+    "indextransacties": 8,
+    "members": [
+        {
+            "Id": 0,
+            "Name": "Test",
+            "LastName": "Test",
+            "Categorie": "Volwassen",
+            "Picture": "",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[0]",
+            "PayDate": "14-11-2021"
+        },
+        {
+            "Id": 1,
+            "Name": "Menua",
+            "LastName": "Hovhannisyan",
+            "Categorie": "Volwassen",
+            "Picture": "",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[1]",
+            "PayDate": "15-11-2021"
+        },
+        {
+            "Id": 2,
+            "Name": "A",
+            "LastName": "A",
+            "Categorie": "Jeugd",
+            "Picture": "",
+            "Saldo": 60,
+            "TotaalSaldo": 85,
+            "Transacties": "[2]",
+            "PayDate": "15-11-2021"
+        },
+        {
+            "Id": 3,
+            "Name": "A",
+            "LastName": "Sds",
+            "Categorie": "Volwassen",
+            "Picture": "results/passfotos/3-A.png",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[3]",
+            "PayDate": "15-11-2021"
+        },
+        {
+            "Id": 4,
+            "Name": "E",
+            "LastName": "E",
+            "Categorie": "Volwassen",
+            "Picture": "results/passfotos/4-E.png",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[4]",
+            "PayDate": "15-11-2021"
+        },
+        {
+            "Id": 5,
+            "Name": "Rr",
+            "LastName": "E",
+            "Categorie": "Volwassen",
+            "Picture": "",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[4]",
+            "PayDate": "15-11-2021"
+        },
+        {
+            "Id": 6,
+            "Name": "Az",
+            "LastName": "Sd",
+            "Categorie": "Volwassen",
+            "Picture": "",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[6]",
+            "PayDate": "15-11-2021"
+        },
+        {
+            "Id": 7,
+            "Name": "Kk",
+            "LastName": "Kk",
+            "Categorie": "Volwassen",
+            "Picture": "",
+            "Saldo": 0,
+            "TotaalSaldo": 110,
+            "Transacties": "[7]",
+            "PayDate": "15-11-2021"
+        }
+    ],
+    "transacties": [
+        {
+            "Id": 0,
+            "Member_Id": 0,
+            "Amount": 110,
+            "Date": "14/10/2021"
+        },
+        {
+            "Id": 7,
+            "Member_Id": 7,
+            "Amount": 110,
+            "Date": "15-10-2021"
+        }
+    ]
 }
