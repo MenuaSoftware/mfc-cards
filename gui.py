@@ -4,7 +4,7 @@ from dateutil import relativedelta
 from datetime import datetime
 from datetime import date
 
-from tkinter import filedialog
+from tkinter import filedialog, ttk
 
 from PIL import ImageTk
 from transactie import *
@@ -41,9 +41,8 @@ class gui:
             p_paydate = i['PayDate']
             payd = datetime.strptime(p_paydate, '%d-%m-%Y').date()
             trans = self.stringToList(p_transacties)
-
-
             mm = member(p_id, p_name, p_lastname, p_categorie,p_saldo,p_totaalsaldo,trans,payd,p_foto)
+            self.checkSaldo(mm)
             self.members.append(mm)
 
         # Closing file
@@ -136,10 +135,10 @@ class gui:
         self.lbl_transmsg = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
         transactieimage = PhotoImage(file=r'assets/gui/createtrans-btn.png')
         transactieimage = transactieimage.subsample(1, 1)
-        self.btn_transactie = Button(self.root, bg="#ffffff", bd=0, image=transactieimage)
         var_transactie = StringVar(self.root)
         self.transactie_entry = Entry(self.root, textvariable=var_transactie, bg='#ffffff', highlightthickness=2,bd=0)
         self.transactie_entry.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
+        self.btn_transactie = Button(self.root, bg="#ffffff", bd=0, image=transactieimage,command= lambda: self.transactieCreate(int(var_transactie.get()),self.currid))
 
 
 
@@ -152,7 +151,7 @@ class gui:
         excelimage = excelimage.subsample(1,1)
 
         imagewd = PhotoImage(file="assets/gui/image-wd.png")
-        self.imagewd = Label(self.root,image=imagewd,borderwidth=0,highlightthickness=0)
+        self.imagewd = Label(self.root,image=imagewd,bg="#f5f5fa",borderwidth=0,highlightthickness=0)
 
         self.msg_lbl = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
         # Create a File Explorer label
@@ -202,6 +201,36 @@ class gui:
 
         self.panel = Label()
 
+
+        #********Gridview dashboard********
+        # columns
+        columns = ('#1', '#2', '#3')
+
+        self.treedh = ttk.Treeview(self.root, columns=columns, show='headings')
+
+        # define headings
+        self.treedh.column("#1", width=50)
+        self.treedh.heading('#1', text='Id')
+        self.treedh.column("#2", width=200)
+        self.treedh.heading('#2', text='Naam')
+        self.treedh.column("#3", width=75)
+        self.treedh.heading('#3', text='Saldo')
+
+        # generate sample data
+        contacts = self.getNotPayed()
+
+        # adding data to the treeview
+        for contact in contacts:
+            self.treedh.insert('', tk.END, values=contact)
+
+        self.treedh.place(x=590, y=160)
+
+        # add a scrollbar
+        self.scrollbardh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.treedh.yview)
+        self.treedh.configure(yscroll=self.scrollbardh.set)
+        self.scrollbardh.place(x=918, y=160, height=228)
+
+
         self.root.resizable(False, False)
         self.root.mainloop()
 
@@ -234,6 +263,8 @@ class gui:
         self.btn_excel.place_forget()
         self.imagewd.place_forget()
         self.panel.place_forget()
+        self.treedh.place_forget()
+        self.scrollbardh.place_forget()
 
         #showing member dash
         self.labelsearch.place(x=204, y=72)
@@ -250,6 +281,7 @@ class gui:
         self.lbl_saldo["text"] = ""
         self.lbl_totaalsaldo["text"] = ""
         self.laatstbetaald["text"] = ""
+
         self.lbl_saldo.place(x=890,y=217)
         self.lbl_totaalsaldo.place(x=985, y=296)
         self.laatstbetaald.place(x=925,y=254)
@@ -261,6 +293,7 @@ class gui:
         self.lbl_count["text"] = ""
         self.lbl_count.place(x=555, y=458)
         self.btn_transactie.place(x=990,y=445)
+        self.lbl_transmsg.place(x=830,y=490)
         self.transactie_entry.place(x=830,y=448,width=150,height=40)
 
     def navDashboard(self):
@@ -324,22 +357,76 @@ class gui:
         self.buttonImposition.place(x=445,y=555)
         self.button_explore.place(x=430,y=190)
         self.btn_excel.place(x=396,y=555)
+        self.treedh.place(x=590, y=160)
+        self.scrollbardh.place(x=918, y=160, height=228)
+        self.treedh.delete(*self.treedh.get_children())
+        # generate sample data
+        contacts = self.getNotPayed()
+        # adding data to the treeview
+        for contact in contacts:
+            self.treedh.insert('', tk.END, values=contact)
 
     def transactieCreate(self,amount,p_id):
-        print("h")
         #aanmaken transactie
         today = date.today()
         today = today.strftime('%d-%m-%Y')
         tt = transactie(self.transactie_id,p_id,amount,today)
-        #aanpassen json
+        self.transactie_id += 1
+        mber = self.searchMember(p_id)
+
+        list = mber.transacties
+        list.append(tt.id)
+        saldo = mber.saldo - amount
+        if(mber.saldo!=0 and amount != 0):
+            totaalsaldo = mber.totaalsaldo + amount
+            transactiels = self.listToString(list)
+
+            paydate = mber.paydate.strftime('%d-%m-%Y')
+
+            #aanpassen json
+            with open('data.json') as file:
+                data = json.load(file)
+                data["indextransacties"] += 1
+            for i in data['members']:
+                if mber.id == i['Id']:
+                    i['Saldo'] = saldo
+                    i['TotaalSaldo'] = totaalsaldo
+                    i['Transacties'] = transactiels
+                    i['PayDate'] = paydate
+            with open('data.json', 'w') as file:
+                json.dump(data, file, indent=2)
 
 
-        #aanpassen member
+            dt = {
+                "Id": tt.id,
+                "Member_Id": tt.member_id,
+                "Amount": tt.amount,
+                "Date": today
+            }
 
-        #aanpassen gui
-
-        #if saldo is back 0, dan datum terug naar volgende maand
-
+            #toevoegen json transactie
+            with open('data.json','r+') as file:
+                # First we load existing data into a dict.
+                file_data = json.load(file)
+                # Join new_data with file_data inside emp_details
+                file_data["transacties"].append(dt)
+                # Sets file's current position at offset.
+                file.seek(0)
+                # convert back to json.
+                json.dump(file_data, file, indent = 4)
+            #aanpassen member
+            mber.saldo = saldo
+            mber.totaalsaldo += amount
+            #aanpassen gui
+            self.lbl_saldo["text"] = mber.saldo
+            self.lbl_totaalsaldo["text"] = mber.totaalsaldo
+            shortDate = mber.paydate.strftime('%d-%m-%Y')
+            self.laatstbetaald["text"] = shortDate
+            self.lbl_transmsg["fg"] = "#76c96b"
+            self.lbl_transmsg["text"] = "Transactie van " + str(amount) + "€ gelukt!"
+        else:
+            self.lbl_transmsg["fg"] = "#f55b5b"
+            self.lbl_transmsg["text"] = "Transactie mislukt!"
 
     def browseFiles(self):
         self.panel.place_forget()
@@ -348,24 +435,24 @@ class gui:
         # Change label contents
         self.label_file_explorer.configure(text="File: " + base)
 
-        self.imagewd.place(x=550,y=75)
+        self.imagewd.place(x=560,y=400)
 
         foto = Image.open(self.file_name)
         width, height = foto.size
         if (width == 2480 and height == 3508):
             im = foto.crop((0, 0, width - 2067, height - 2977))
-            im = im.resize((194, 248), Image.ANTIALIAS)
+            im = im.resize((138, 176), Image.ANTIALIAS)
             im = ImageTk.PhotoImage(im)
         else:
             im = foto.crop((226, 353, width - 226, height - 353))
-            im = im.resize((194, 248), Image.ANTIALIAS)
+            im = im.resize((138, 176), Image.ANTIALIAS)
             im = ImageTk.PhotoImage(im)
 
 
         self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
         self.panel["image"] = im
         self.panel.image = im
-        self.panel.place(x=605, y=130)
+        self.panel.place(x=598, y=445)
         #foto opladen
 
     def impos(self):
@@ -561,7 +648,8 @@ class gui:
                 self.lbl_saldo["fg"] = "#1F1F1F"
             self.lbl_saldo["text"] = mmber[0].saldo
             self.lbl_totaalsaldo["text"] = mmber[0].totaalsaldo
-            self.laatstbetaald["text"] = mmber[0].paydate
+            shortDate = mmber[0].paydate.strftime('%d-%m-%Y')
+            self.laatstbetaald["text"] = shortDate
             if (mmber[0].foto != ""):
                 img = Image.open(mmber[0].foto)
                 img = img.resize((235, 303), Image.ANTIALIAS)
@@ -592,7 +680,8 @@ class gui:
                 self.lbl_saldo["fg"] = "#1F1F1F"
             self.lbl_saldo["text"] = mmber.saldo
             self.lbl_totaalsaldo["text"] = mmber.totaalsaldo
-            self.laatstbetaald["text"] = mmber.paydate
+            shortDate = mmber.paydate.strftime('%d-%m-%Y')
+            self.laatstbetaald["text"] = shortDate
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
@@ -693,18 +782,17 @@ class gui:
             today = date.today()
             today = today.strftime('%d-%m-%Y')
             tt = transactie(self.transactie_id,p_id,amount,today)
+
             trans = []
             trans.append(tt)
             shortDate = nextmonth.strftime('%d-%m-%Y')
-            mm = member(p_id, p_name, p_lastname, p_categorie,0,amount,tt,shortDate,pic)
+            mm = member(p_id, p_name, p_lastname, p_categorie,0,amount,trans,nextmonth,pic)
             self.members.append(mm)
 
             self.indlabel["text"] = "#"+varind.get()
             tr = []
             tr.append(tt.id)
-            transstring = listToString(tr)
-
-
+            transstring = self.listToString(tr)
 
             y = {
                 "Id": self.index,
@@ -717,14 +805,14 @@ class gui:
                 "Transacties": transstring,
                 "PayDate": shortDate
             }
-            write_json(y)
+            self.write_json(y)
             x = {
                 "Id": tt.id,
                 "Member_Id": tt.member_id,
                 "Amount": tt.amount,
                 "Date": today
             }
-            write_json_transactie(x)
+            self.write_json_transactie(x)
             self.msg_lbl["text"] = p_name + " toegevoegd!"
             self.msg_lbl["fg"] = "#76c96b"
             picture(str(p_id), p_name, p_lastname, p_categorie,im)
@@ -778,7 +866,7 @@ class gui:
             im = None
             pic=""
 
-            nextmonth = datetime.date.today() + relativedelta.relativedelta(months=1)
+            nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
             if(p_categorie == "Jeugd"):
                 amount = 85
             else:
@@ -786,6 +874,8 @@ class gui:
             today = date.today()
             today = today.strftime('%d-%m-%Y')
             tt = transactie(self.transactie_id,p_id,amount,today)
+
+
             trans = []
             trans.append(tt)
             shortDate = nextmonth.strftime('%d-%m-%Y')
@@ -794,7 +884,7 @@ class gui:
 
             tr = []
             tr.append(tt.id)
-            transstring = listToString(tr)
+            transstring = self.listToString(tr)
 
 
             y = {
@@ -808,7 +898,7 @@ class gui:
                 "Transacties": transstring,
                 "PayDate": shortDate
             }
-            write_json(y)
+            self.write_json(y)
 
             x = {
                 "Id": tt.id,
@@ -816,7 +906,7 @@ class gui:
                 "Amount": tt.amount,
                 "Date": today
             }
-            write_json_transactie(x)
+            self.write_json_transactie(x)
             picture(str(p_id), p_name, p_lastname, p_categorie,im)
         varind = StringVar()
         varind.set(self.index+1)
@@ -829,40 +919,81 @@ class gui:
         list = []
         for i in p_string:
             if(i!="[" and i!="," and i!="]"):
-                list.append(int(i))
+                list.append(i)
         return list
 
-# function to add to JSON
-def write_json(new_data, filename='data.json'):
-    with open(filename,'r+') as file:
-        # First we load existing data into a dict.
-        file_data = json.load(file)
-        # Join new_data with file_data inside emp_details
-        file_data["members"].append(new_data)
-        file_data["index"] += 1
-        # Sets file's current position at offset.
-        file.seek(0)
-        # convert back to json.
-        json.dump(file_data, file, indent = 4)
+    def write_json_transactie(self,new_data,filename='data.json'):
+        with open(filename,'r+') as file:
+            file_data = json.load(file)
+            file_data["transacties"].append(new_data)
+            file_data["indextransacties"] += 1
+            self.transactie_id += 1
+            file.seek(0)
+            json.dump(file_data,file,indent=4)
+    # function to add to JSON
+    def write_json(self,new_data, filename='data.json'):
+        with open(filename,'r+') as file:
+            # First we load existing data into a dict.
+            file_data = json.load(file)
+            # Join new_data with file_data inside emp_details
+            file_data["members"].append(new_data)
+            file_data["index"] += 1
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
 
-def write_json_transactie(new_data,filename='data.json'):
-    with open(filename,'r+') as file:
-        file_data = json.load(file)
-        file_data["transacties"].append(new_data)
-        file_data["indextransacties"] += 1
-        file.seek(0)
-        json.dump(file_data,file,indent=4)
+    def listToString(self,list):
+        string ="["
+        for i in range(len(list)):
+            string += str(list[i])
+            if(i==len(list)-1):
+                string+= "]"
+            else:
+                string +=","
+        return string
+
+    def checkSaldo(self,p_member):
+        currdatum = p_member.paydate.strftime('%d-%m-%Y')
+        today = date.today()
+        today = today.strftime('%d-%m-%Y')
+
+        nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
+        nxt = nextmonth.strftime('%d-%m-%Y')
+
+        if(today == currdatum):
+            #saldo aanpassen in json
+            # datum aanpassen in json
+            with open('data.json') as file:
+                data = json.load(file)
+            for i in data['members']:
+                if p_member.id == i['Id']:
+                    if(i["Categorie"]=="Jeugd"):
+                        i["Saldo"] += 25
+                    else:
+                        i["Saldo"] += 35
+                    i["PayDate"] = nxt
+            with open('data.json', 'w') as file:
+                json.dump(data, file, indent=2)
+
+            #saldo aanpassen in member
+            #datum aanpassen in member
+            if (p_member.categorie == "Jeugd"):
+                p_member.saldo += 25
+            else:
+                p_member.saldo += 35
+
+            p_member.paydate = nextmonth
+
+    def getNotPayed(self):
+        list = []
+        for i in self.members:
+            if(i.saldo>0):
+                list.append(("#"+str(i.id),i.name + " " + i.lastname, str(i.saldo) + "€"))
+
+        return list
 
 
-def listToString(list):
-    string ="["
-    for i in range(len(list)):
-        string += str(list[i])
-        if(i==len(list)-1):
-            string+= "]"
-        else:
-            string +=","
-    return string
 
 
 

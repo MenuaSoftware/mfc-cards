@@ -1,21 +1,12 @@
-#member venster
--bij zoeken toevoegen dat je iemand zijn saldo kan aanpassen of toevoegen, dus zeggen of hoeveel hij heeft betaald, stel saldo is 75, mss hij betaald 50 dan is saldo 25.
-    -verander json en member
-    en direct in gui
-    als saldo volledig is betaald, dan datum veranderen
-    transactie aanmaken
-
-#background system
--saldo van een persoon gaat omhoog met 35 volwassen 25 kinderen als de datum voorbij is, dus maal aantal keer dat de datum voorbij is,
-dus stel eerste maand je betaalt niet dan wordt saldo 35 en paydate zet naar volgende maand dan maar je saldo is nu 35, dan je betaalt weer niet
-dan is je saldo 75 en de maand weer volgende -> reset button en als programma wordt gestart kijkt hy da na
+#members venster
+-transactie toevoegen, data table
+-delete user -> verwijderd in member, json en foto(kaart niet perse)
 
 #dashboard venster
--bij dashboard toevoegen lijst met mensen die nog niet hebben betaald. dus waar saldo van die persoon > is dan 0
 (-ook nog tabel te zien wie nog geen foto heeft)
 
 -commentaar in code
 -code verkorten
-
+    -methodes maken van herhalingen
 
 -exe maken
