@@ -64,12 +64,12 @@ class gui:
 
         #NAVBAR
         #dashboard
-        dashboardimage = PhotoImage(file="assets/gui/Dashboard-select.png")
+        dashboardimage = PhotoImage(file="assets/gui/navbar/dashboard-selected.png")
         self.dashselect = Button(self.root,image=dashboardimage,borderwidth=0,highlightthickness=0,command = self.navDashboard)
         self.dashselect.place(x=0,y=72)
 
         #members
-        membersiamge = PhotoImage(file="assets/gui/Members-unselect.png")
+        membersiamge = PhotoImage(file="assets/gui/navbar/members-notselected.png")
         self.membersselect = Button(self.root,image=membersiamge,borderwidth=0,highlightthickness=0,command=self.navMembers)
         self.membersselect.place(x=0,y=124)
 
@@ -78,12 +78,12 @@ class gui:
 
 
         #dashboard main background
-        crwd = PhotoImage(file="assets/gui/createmember-wd.png")
+        crwd = PhotoImage(file="assets/gui/dashboard/dashboard-main.png")
         self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0)
         self.labelcreate.place(x=204,y=72)
 
         #members main backgound
-        srchmb = PhotoImage(file="assets/gui/searchmember-wd.png")
+        srchmb = PhotoImage(file="assets/gui/members/members-main.png")
         self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0)
 
         #members main searchbox
@@ -310,7 +310,7 @@ class gui:
         self.lbl_transmsg.place(x=830,y=490)
         self.transactie_entry.place(x=830,y=448,width=150,height=40)
 
-    def navDashboard(self):
+    def navAdd(self):
         #navbar members
         self.membersselect.place_forget()
         membimage = PhotoImage(file="assets/gui/Members-unselect.png")
