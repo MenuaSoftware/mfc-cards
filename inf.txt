@@ -5,8 +5,19 @@
 #dashboard venster
 (-ook nog tabel te zien wie nog geen foto heeft)
 
--commentaar in code
--code verkorten
-    -methodes maken van herhalingen
+#Add venster
+Gebruiker aanmaken ui
+gebruiker excel file ook lezen wnr gebruiker is lid geworden voor saldo etc te berekenen op basis daarop
+
+#Transacties
+geeft alle transacties weer, filteren in transacties
+
+
+
+-fix naam op kaart 3cijfers mensen naam kleiner maken
+-Linken met mongoDB
+	Bij openen na kijken naar json file en schrijven wat veranderd is
+		-mss hiervoor een speciaal json maken met alle veranderingen gedaan waar nog geen internet is
+	en bij sluiten ook kijken dus gwn zelfde functie bij sluiten en openen
 
 -exe maken
