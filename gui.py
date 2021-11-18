@@ -62,46 +62,59 @@ class gui:
         label1 = Label(self.root, image=bg,borderwidth=0, highlightthickness=0)
         label1.place(x=0, y=0)
 
+        #NAVBAR
+        #dashboard
         dashboardimage = PhotoImage(file="assets/gui/Dashboard-select.png")
         self.dashselect = Button(self.root,image=dashboardimage,borderwidth=0,highlightthickness=0,command = self.navDashboard)
         self.dashselect.place(x=0,y=72)
 
+        #members
         membersiamge = PhotoImage(file="assets/gui/Members-unselect.png")
         self.membersselect = Button(self.root,image=membersiamge,borderwidth=0,highlightthickness=0,command=self.navMembers)
         self.membersselect.place(x=0,y=124)
 
-        #createimage wd show
+        #add
+        #transaction
+
+
+        #dashboard main background
         crwd = PhotoImage(file="assets/gui/createmember-wd.png")
         self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0)
         self.labelcreate.place(x=204,y=72)
 
-        #searchmember wd
+        #members main backgound
         srchmb = PhotoImage(file="assets/gui/searchmember-wd.png")
         self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0)
 
+        #members main searchbox
         var_txt = StringVar(self.root)
         self.search_text = tk.Entry(self.root, textvariable=var_txt, bg='#ffffff', bd=0,width=18)
 
+        #members searchbutton icon
         searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
         searchimage = searchimage.subsample(1, 1)
         self.btn_search = Button(self.root, text="Zoek", bg="#ffffff", bd=0, image=searchimage, command=lambda :self.getInfo(var_txt.get()))
         self.btn_search.image = searchimage
 
+        #members user information
         self.lbl_id = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
         self.lbl_name = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
         self.lbl_lastname = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
         self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
 
+        #members Change or add image of user button image
         addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
         addimage = addimage.subsample(2,2)
         self.btn_addimage = Button(self.root, bg="#ffffff", bd=0, image=addimage, command=lambda :self.changeImage(self.currid))
         self.btn_addimage.image = addimage
 
+        #members make new card of current user button image
         addcardimage = PhotoImage(file=r'assets/gui/addcard-btn.png')
         addcardimage = addcardimage.subsample(1,1)
         self.btn_addcardimage = Button(self.root, bg="#ffffff", bd=0, image=addcardimage, command=lambda :self.addcardimage(self.currid))
         self.btn_addcardimage.image = addcardimage
 
+        #members edit user button image
         editimage = PhotoImage(file=r'assets/gui/edit-btn.png')
         editimage = editimage.subsample(1,1)
         self.btn_editimage = Button(self.root, bg="#ffffff", bd=0, image=editimage, command=lambda :self.changeUser(self.currid))
@@ -112,6 +125,7 @@ class gui:
         self.lastname_text = tk.Entry()
         self.categorie_option = Button()
 
+        #members pages left, right and count
         leftimage = PhotoImage(file=r'assets/gui/left-btn.png')
         leftimage = leftimage.subsample(2,2)
         self.btn_left = Button(self.root, bg="#ffffff", bd=0, image=leftimage,command= lambda: self.left(self.searchlist, self.searchcount))
@@ -126,7 +140,8 @@ class gui:
         self.lbl_count["text"] = ""
         self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
 
-        #saldo
+
+        #members portmonee information
         self.lbl_saldo = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
         self.lbl_totaalsaldo = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
         self.laatstbetaald = Label(self.root, text="", bg='#ffffff', fg='#eba73b', font='Helvetica 14 bold')
@@ -143,16 +158,19 @@ class gui:
 
 
 
-
+        #add add user image
         browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
         browseimage = browseimage.subsample(1,1)
 
+        #Add import excel file
         excelimage = PhotoImage(file=r'assets/gui/excel-btn.png')
         excelimage = excelimage.subsample(1,1)
 
+        #Add when picture added show here
         imagewd = PhotoImage(file="assets/gui/image-wd.png")
         self.imagewd = Label(self.root,image=imagewd,bg="#f5f5fa",borderwidth=0,highlightthickness=0)
 
+        #add error msg
         self.msg_lbl = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
         # Create a File Explorer label
         self.label_file_explorer = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 6')
@@ -160,29 +178,29 @@ class gui:
         self.label_file_explorer.place(x=430,y=230)
         self.button_explore.place(x=430,y=190)
         self.msg_lbl.place(x=270,y=530)
-
         self.btn_excel = Button(self.root, text="browse excel",bg="#ffffff", bd=0,image=excelimage ,command=self.readExcel)
         self.btn_excel.place(x=396,y=555)
 
+        #Add lijst van categorie
         self.OPTIONS = ["Volwassen", "Jeugd", "Vrouwen"]
 
+        #input voor naam, achternaam en categorie
         var_name = StringVar(self.root)
         var_last_name = StringVar(self.root)
-
         self.e2 = tk.Entry(self.root, textvariable=var_name, bg='#ffffff', highlightthickness=2,bd=0)
         self.e2.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
         self.e3 = tk.Entry(self.root, textvariable=var_last_name, bg='#ffffff', highlightthickness=2 ,bd=0)
         self.e3.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
-
         var_categorie = StringVar(self.root)
         var_categorie.set(self.OPTIONS[0])
         self.o4 = OptionMenu(self.root, var_categorie, *self.OPTIONS)
 
-        # Functie run
-        self.buttonRun = Button(self.root, text="Create", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
 
+        #Add Functie run -> om user aantemaken
+        self.buttonRun = Button(self.root, text="Create", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
         self.buttonRun.place(x=270,y=555,width=105,height=38)
 
+        #Add knop om aangemaakte gebruikers te sorteren
         sortimage = PhotoImage(file=r'assets/gui/sort-btn.png')
         sortimage = sortimage.subsample(1,1)
         self.buttonImposition = Button(self.root, text="Imposition", bg="#ffffff", bd=0,image=sortimage,command=lambda: self.impos())
@@ -205,9 +223,7 @@ class gui:
         #********Gridview dashboard********
         # columns
         columns = ('#1', '#2', '#3')
-
         self.treedh = ttk.Treeview(self.root, columns=columns, show='headings')
-
         # define headings
         self.treedh.column("#1", width=50)
         self.treedh.heading('#1', text='Id')
@@ -215,20 +231,18 @@ class gui:
         self.treedh.heading('#2', text='Naam')
         self.treedh.column("#3", width=75)
         self.treedh.heading('#3', text='Saldo')
-
         # generate sample data
         contacts = self.getNotPayed()
-
         # adding data to the treeview
         for contact in contacts:
             self.treedh.insert('', tk.END, values=contact)
-
         self.treedh.place(x=590, y=160)
-
         # add a scrollbar
         self.scrollbardh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.treedh.yview)
         self.treedh.configure(yscroll=self.scrollbardh.set)
         self.scrollbardh.place(x=918, y=160, height=228)
+
+
 
 
         self.root.resizable(False, False)
