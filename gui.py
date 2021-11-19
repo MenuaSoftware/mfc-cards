@@ -100,16 +100,16 @@ class gui:
         self.search_text = tk.Entry(self.root, textvariable=var_txt, bg='#ffffff', bd=0,width=18)
 
         #members searchbutton icon
-        searchimage = PhotoImage(file=r'assets/gui/search-btn.png')
+        searchimage = PhotoImage(file=r'assets/gui/members/search-btn.png')
         searchimage = searchimage.subsample(1, 1)
-        self.btn_search = Button(self.root, text="Zoek", bg="#ffffff", bd=0, image=searchimage, command=lambda :self.getInfo(var_txt.get()))
+        self.btn_search = Button(self.root, text="Zoek", bg="#0f0f0f", bd=0, image=searchimage, command=lambda :self.getInfo(var_txt.get()))
         self.btn_search.image = searchimage
 
         #members user information
         self.lbl_id = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
-        self.lbl_name = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
-        self.lbl_lastname = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
-        self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 14 bold')
+        self.lbl_name = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
+        self.lbl_lastname = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
+        self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
 
         #members Change or add image of user button image
         addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
@@ -147,7 +147,7 @@ class gui:
 
         self.lbl_count = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 13 bold')
         self.lbl_count["text"] = ""
-        self.lbl_msg = tk.Label(self.root, text="", bg="#ffffff", font='Helvetica 8')
+        self.lbl_msg = tk.Label(self.root, text="", bg="#292929", font='Helvetica 8')
 
 
         #members portmonee information
@@ -281,14 +281,14 @@ class gui:
         self.currNav("members")
         #showing member dash
         self.labelsearch.place(x=204, y=72)
-        self.search_text.place(x=460,y=110,width=200)
-        self.btn_search.place(x=688,y=100)
-
-        self.lbl_id.place(x=522,y=190)
-        self.lbl_name.place(x=520,y=255)
-        self.lbl_lastname.place(x=520,y=335)
-        self.lbl_categorie.place(x=520,y=415)
-        self.lbl_msg.place(x=520,y=460)
+        self.search_text.place(x=378,y=112,width=165)
+        self.btn_search.place(x=550,y=109)
+        self.lbl_id.place(x=472,y=148)
+        self.lbl_name.place(x=550,y=171)
+        self.lbl_lastname.place(x=620,y=231)
+        self.lbl_categorie.place(x=595,y=291)
+        self.lbl_msg.place(x=580,y=110)
+        '''
 
         self.lbl_transmsg["text"] = ""
         self.lbl_saldo["text"] = ""
@@ -308,6 +308,7 @@ class gui:
         self.btn_transactie.place(x=990,y=445)
         self.lbl_transmsg.place(x=830,y=490)
         self.transactie_entry.place(x=830,y=448,width=150,height=40)
+        '''
 
     def navAdd(self):
         self.hideAll()
@@ -363,18 +364,18 @@ class gui:
         for contact in contactsnoFoto:
             self.noFotodh.insert('', tk.END, values=contact)
 
-
-
     def transactieCreate(self,amount,p_id):
         #aanmaken transactie
         today = date.today()
         today = today.strftime('%d-%m-%Y')
         tt = transactie(self.transactie_id,p_id,amount,today)
+        self.transacties.append(tt)
         self.transactie_id += 1
         mber = self.searchMember(p_id)
 
         list = mber.transacties
         list.append(tt.id)
+        mber.transacties = list
         saldo = mber.saldo - amount
         if(mber.saldo!=0 and amount != 0):
             totaalsaldo = mber.totaalsaldo + amount
