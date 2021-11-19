@@ -14,6 +14,11 @@ geeft alle transacties weer, filteren in transacties
 
 
 
+
+-fix wnr transactie maken update in gebruiker
+-alles moet update ook in object member
+
+
 -fix naam op kaart 3cijfers mensen naam kleiner maken
 -Linken met mongoDB
 	Bij openen na kijken naar json file en schrijven wat veranderd is

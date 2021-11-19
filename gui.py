@@ -22,6 +22,7 @@ class gui:
         self.searchcount = 1
         self.searchlist = []
         self.transactie_id = 0
+        self.transacties = []
 
     def guiStart(self):
         f = open('data.json', )
@@ -44,6 +45,14 @@ class gui:
             mm = member(p_id, p_name, p_lastname, p_categorie,p_saldo,p_totaalsaldo,trans,payd,p_foto)
             self.checkSaldo(mm)
             self.members.append(mm)
+
+        for j in data['transacties']:
+            p_tid = j['Id']
+            p_tmemberid = j['Member_Id']
+            p_tamount = ['Amount']
+            p_tdate = ['Date']
+            tt = transactie(p_tid,p_tmemberid,p_tamount,p_tdate)
+            self.transacties.append(tt)
 
         # Closing file
         f.close()
@@ -80,7 +89,7 @@ class gui:
         #dashboard main background
         crwd = PhotoImage(file="assets/gui/dashboard/dashboard-main.png")
         self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0)
-        self.labelcreate.place(x=204,y=72)
+        self.labelcreate.place(x=204, y=72)
 
         #members main backgound
         srchmb = PhotoImage(file="assets/gui/members/members-main.png")
@@ -175,11 +184,7 @@ class gui:
         # Create a File Explorer label
         self.label_file_explorer = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 6')
         self.button_explore = Button(self.root, text="Browse Files",bg="#ffffff", bd=0,image=browseimage ,command=self.browseFiles)
-        self.label_file_explorer.place(x=430,y=230)
-        self.button_explore.place(x=430,y=190)
-        self.msg_lbl.place(x=270,y=530)
         self.btn_excel = Button(self.root, text="browse excel",bg="#ffffff", bd=0,image=excelimage ,command=self.readExcel)
-        self.btn_excel.place(x=396,y=555)
 
         #Add lijst van categorie
         self.OPTIONS = ["Volwassen", "Jeugd", "Vrouwen"]
@@ -198,21 +203,15 @@ class gui:
 
         #Add Functie run -> om user aantemaken
         self.buttonRun = Button(self.root, text="Create", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
-        self.buttonRun.place(x=270,y=555,width=105,height=38)
 
         #Add knop om aangemaakte gebruikers te sorteren
         sortimage = PhotoImage(file=r'assets/gui/sort-btn.png')
         sortimage = sortimage.subsample(1,1)
         self.buttonImposition = Button(self.root, text="Imposition", bg="#ffffff", bd=0,image=sortimage,command=lambda: self.impos())
-        self.buttonImposition.place(x=445,y=555)
 
         indrs = self.index +1
         self.indlabel = tk.Label(self.root, text="#"+str(indrs), bg='#ffffff', fg='#1f1f1f', pady=5, font='assets/SourceSansPro-Bold.ttf')
-        self.indlabel.place(x=270,y=190)
 
-        self.e2.place(x=270,y=276,width=210,height=38)
-        self.e3.place(x=270,y=381,width=210,height=38)
-        self.o4.place(x=270,y=486,width=210,height=38)
         self.o4["highlightthickness"] = 2
         self.o4.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
         self.o4["bd"] = 0
@@ -227,59 +226,59 @@ class gui:
         # define headings
         self.treedh.column("#1", width=50)
         self.treedh.heading('#1', text='Id')
-        self.treedh.column("#2", width=200)
+        self.treedh.column("#2", width=350)
         self.treedh.heading('#2', text='Naam')
-        self.treedh.column("#3", width=75)
+        self.treedh.column("#3", width=81)
         self.treedh.heading('#3', text='Saldo')
         # generate sample data
         contacts = self.getNotPayed()
         # adding data to the treeview
         for contact in contacts:
             self.treedh.insert('', tk.END, values=contact)
-        self.treedh.place(x=590, y=160)
+        self.treedh.place(x=258, y=316,height=335)
         # add a scrollbar
         self.scrollbardh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.treedh.yview)
         self.treedh.configure(yscroll=self.scrollbardh.set)
-        self.scrollbardh.place(x=918, y=160, height=228)
+        self.scrollbardh.place(x=742, y=316, height=334)
+
+        #********Gridview No foto********
+        # columns
+        columns = ('#1', '#2')
+        self.noFotodh = ttk.Treeview(self.root, columns=columns, show='headings')
+        # define headings
+        self.noFotodh.column("#1", width=50)
+        self.noFotodh.heading('#1', text='Id')
+        self.noFotodh.column("#2", width=287)
+        self.noFotodh.heading('#2', text='Naam')
+
+        # generate sample data
+        contacts = self.getNoFoto()
+        # adding data to the treeview
+        for contact in contacts:
+            self.noFotodh.insert('', tk.END, values=contact)
+        self.noFotodh.place(x=799, y=316,height=335)
+        # add a scrollbar
+        self.scrollbarNoFotodhdh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.noFotodh.yview)
+        self.noFotodh.configure(yscroll=self.scrollbarNoFotodhdh.set)
+        self.scrollbarNoFotodhdh.place(x=1139, y=316, height=334)
+
+        self.lbl_AantalMembers = Label(self.root, text=self.getTotalMembers(), bg='#ffffff', fg='#1f1f1f', font='Helvetica 32')
+        self.lbl_AantalMembers.place(x=398,y=120)
+
+        self.lbl_AantalNietBetaald = Label(self.root, text=self.getTotalNotPayed(), bg='#ffffff', fg='#1f1f1f', font='Helvetica 32')
+        self.lbl_AantalNietBetaald.place(x=715,y=120)
 
 
+        self.lbl_AantalTransacties = Label(self.root, text=self.getTotalTransactions(), bg='#ffffff', fg='#1f1f1f', font='Helvetica 32')
+        self.lbl_AantalTransacties.place(x=1025,y=120)
 
 
         self.root.resizable(False, False)
         self.root.mainloop()
 
     def navMembers(self):
-        #navbar dashboard
-        self.dashselect.place_forget()
-        dashimage = PhotoImage(file="assets/gui/Dashboard-unselect.png")
-        self.dashselect.image = dashimage
-        self.dashselect["image"]=dashimage
-        self.dashselect.place(x=0,y=72)
-
-        #navbar members
-        self.membersselect.place_forget()
-        membimage = PhotoImage(file="assets/gui/Members-select.png")
-        self.membersselect.image = membimage
-        self.membersselect["image"] = membimage
-        self.membersselect.place(x=0,y=124)
-
-        #hiding main dash
-        self.labelcreate.place_forget()
-        self.e3.place_forget()
-        self.e2.place_forget()
-        self.o4.place_forget()
-        self.msg_lbl.place_forget()
-        self.label_file_explorer.place_forget()
-        self.indlabel.place_forget()
-        self.buttonRun.place_forget()
-        self.buttonImposition.place_forget()
-        self.button_explore.place_forget()
-        self.btn_excel.place_forget()
-        self.imagewd.place_forget()
-        self.panel.place_forget()
-        self.treedh.place_forget()
-        self.scrollbardh.place_forget()
-
+        self.hideAll()
+        self.currNav("members")
         #showing member dash
         self.labelsearch.place(x=204, y=72)
         self.search_text.place(x=460,y=110,width=200)
@@ -311,55 +310,9 @@ class gui:
         self.transactie_entry.place(x=830,y=448,width=150,height=40)
 
     def navAdd(self):
-        #navbar members
-        self.membersselect.place_forget()
-        membimage = PhotoImage(file="assets/gui/Members-unselect.png")
-        self.membersselect.image = membimage
-        self.membersselect["image"] = membimage
-        self.membersselect.place(x=0,y=124)
+        self.hideAll()
 
-        #navbar dashboard
-        self.dashselect.place_forget()
-        dashimage = PhotoImage(file="assets/gui/Dashboard-select.png")
-        self.dashselect.image = dashimage
-        self.dashselect["image"]=dashimage
-        self.dashselect.place(x=0,y=72)
-
-        #hiding members dash
-        self.labelsearch.place_forget()
-        self.search_text.place_forget()
-        self.btn_search.place_forget()
-
-        self.currid = 0
-        self.lbl_id["text"] = ""
-        self.lbl_name["text"] = ""
-        self.lbl_lastname["text"] = ""
-        self.lbl_categorie["text"] = ""
-        self.lbl_msg.place_forget()
-
-        self.btn_addimage.place_forget()
-        self.btn_addcardimage.place_forget()
-        self.btn_editimage.place_forget()
-
-        self.btn_saveimage.place_forget()
-        self.name_text.place_forget()
-        self.panel.place_forget()
-        self.lastname_text.place_forget()
-        self.categorie_option.place_forget()
-
-        self.btn_left.place_forget()
-        self.btn_right.place_forget()
-        self.lbl_count.place_forget()
-
-        self.lbl_saldo.place_forget()
-        self.lbl_totaalsaldo.place_forget()
-        self.laatstbetaald.place_forget()
-
-        self.lbl_transmsg.place_forget()
-        self.btn_transactie.place_forget()
-        self.transactie_entry.place_forget()
-
-        #main wd
+        #show Add
         self.labelcreate.place(x=204,y=72)
         self.e3.place(x=270,y=381,width=210,height=38)
         self.e2.place(x=270,y=276,width=210,height=38)
@@ -379,6 +332,38 @@ class gui:
         # adding data to the treeview
         for contact in contacts:
             self.treedh.insert('', tk.END, values=contact)
+
+    def navDashboard(self):
+        self.hideAll()
+        self.currNav("dashboard")
+        self.updateDash()
+        self.labelcreate.place(x=204, y=72)
+        self.treedh.place(x=258, y=316,height=335)
+        self.scrollbardh.place(x=742, y=316, height=334)
+        self.noFotodh.place(x=799, y=316,height=335)
+        self.scrollbarNoFotodhdh.place(x=1139, y=316, height=334)
+        self.lbl_AantalTransacties.place(x=1025,y=120)
+        self.lbl_AantalNietBetaald.place(x=715,y=120)
+        self.lbl_AantalMembers.place(x=398,y=120)
+
+    def updateDash(self):
+        self.lbl_AantalMembers["text"] = self.getTotalMembers()
+        self.lbl_AantalNietBetaald["text"] = self.getTotalNotPayed()
+        self.lbl_AantalTransacties["text"] = self.getTotalTransactions()
+
+        #update niet betaald lijst
+        self.treedh.delete(*self.treedh.get_children())
+        contactstreedh = self.getNotPayed()
+        for contact in contactstreedh:
+            self.treedh.insert('', tk.END, values=contact)
+
+        #update geen foto lijst
+        self.noFotodh.delete(*self.noFotodh.get_children())
+        contactsnoFoto = self.getNoFoto()
+        for contact in contactsnoFoto:
+            self.noFotodh.insert('', tk.END, values=contact)
+
+
 
     def transactieCreate(self,amount,p_id):
         #aanmaken transactie
@@ -1003,9 +988,126 @@ class gui:
         list = []
         for i in self.members:
             if(i.saldo>0):
-                list.append(("#"+str(i.id),i.name + " " + i.lastname, str(i.saldo) + "€"))
+                list.append(("#"+str(i.id),i.name + " " + i.lastname, "€" + str(i.saldo)))
 
         return list
+
+
+    def hideAll(self):
+        # hiding main dash
+        self.lbl_AantalMembers.place_forget()
+        self.lbl_AantalNietBetaald.place_forget()
+        self.lbl_AantalTransacties.place_forget()
+        self.noFotodh.place_forget()
+        self.scrollbarNoFotodhdh.place_forget()
+        self.labelcreate.place_forget()
+        self.e3.place_forget()
+        self.e2.place_forget()
+        self.o4.place_forget()
+        self.msg_lbl.place_forget()
+        self.label_file_explorer.place_forget()
+        self.indlabel.place_forget()
+        self.buttonRun.place_forget()
+        self.buttonImposition.place_forget()
+        self.button_explore.place_forget()
+        self.btn_excel.place_forget()
+        self.imagewd.place_forget()
+        self.panel.place_forget()
+        self.treedh.place_forget()
+        self.scrollbardh.place_forget()
+
+        # showing member dash
+        self.labelsearch.place_forget()
+        self.search_text.place_forget()
+        self.btn_search.place_forget()
+
+        self.lbl_id.place_forget()
+        self.lbl_name.place_forget()
+        self.lbl_lastname.place_forget()
+        self.lbl_categorie.place_forget()
+        self.lbl_msg.place_forget()
+
+        self.lbl_transmsg["text"] = ""
+        self.lbl_saldo["text"] = ""
+        self.lbl_totaalsaldo["text"] = ""
+        self.laatstbetaald["text"] = ""
+
+        self.lbl_saldo.place_forget()
+        self.lbl_totaalsaldo.place_forget()
+        self.laatstbetaald.place_forget()
+
+        self.btn_addimage.place_forget()
+        self.btn_addcardimage.place_forget()
+        self.btn_editimage.place_forget()
+
+        self.lbl_count.place_forget()
+        self.btn_transactie.place_forget()
+        self.lbl_transmsg.place_forget()
+        self.transactie_entry.place_forget()
+
+    def currNav(self,p_window):
+        if(p_window=="dashboard"):
+            #hide all onnodige
+            self.membersselect.place_forget()
+
+            #alle onnodige op notselected zetten
+            #members
+            membimage = PhotoImage(file="assets/gui/navbar/members-notselected.png")
+            self.membersselect.image = membimage
+            self.membersselect["image"] = membimage
+            self.membersselect.place(x=0, y=124)
+
+            # navbar dashboard select maken
+            #dashboard
+            self.dashselect.place_forget()
+            dashimage = PhotoImage(file="assets/gui/navbar/dashboard-selected.png")
+            self.dashselect.image = dashimage
+            self.dashselect["image"] = dashimage
+            self.dashselect.place(x=0, y=72)
+
+        elif(p_window=="members"):
+            # hide all onnodige
+            self.dashselect.place_forget()
+
+            # alle onnodige op notselected zetten
+            # dashboard
+            dashimage = PhotoImage(file="assets/gui/navbar/dashboard-notselected.png")
+            self.dashselect.image = dashimage
+            self.dashselect["image"] = dashimage
+            self.dashselect.place(x=0, y=72)
+
+            # navbar dashboard select maken
+            # members
+            self.membersselect.place_forget()
+            membimage = PhotoImage(file="assets/gui/navbar/members-selected.png")
+            self.membersselect.image = membimage
+            self.membersselect["image"] = membimage
+            self.membersselect.place(x=0, y=124)
+
+
+    def getNoFoto(self):
+        list = []
+        for member in self.members:
+            if(member.foto == ""):
+                list.append(("#"+str(member.id),member.name + " " + member.lastname))
+        return list
+
+
+    def getTotalMembers(self):
+        return len(self.members)
+
+    def getTotalNotPayed(self):
+        count = 0
+        for i in self.members:
+            if(i.saldo>0):
+                count += 1
+        return count
+
+
+    def getTotalTransactions(self):
+        return len(self.transacties)
+
+
 
 
 
