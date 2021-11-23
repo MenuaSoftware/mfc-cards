@@ -112,21 +112,21 @@ class gui:
         self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
 
         #members Change or add image of user button image
-        addimage = PhotoImage(file=r'assets/gui/browse-btn.png')
-        addimage = addimage.subsample(2,2)
-        self.btn_addimage = Button(self.root, bg="#ffffff", bd=0, image=addimage, command=lambda :self.changeImage(self.currid))
+        addimage = PhotoImage(file=r'assets/gui/members/imgadd-btn.png')
+        addimage = addimage.subsample(1,1)
+        self.btn_addimage = Button(self.root, bg="#292929", bd=0, image=addimage, command=lambda :self.changeImage(self.currid))
         self.btn_addimage.image = addimage
 
         #members make new card of current user button image
-        addcardimage = PhotoImage(file=r'assets/gui/addcard-btn.png')
+        addcardimage = PhotoImage(file=r'assets/gui/members/cardadd-btn.png')
         addcardimage = addcardimage.subsample(1,1)
-        self.btn_addcardimage = Button(self.root, bg="#ffffff", bd=0, image=addcardimage, command=lambda :self.addcardimage(self.currid))
+        self.btn_addcardimage = Button(self.root, bg="#292929", bd=0, image=addcardimage, command=lambda :self.addcardimage(self.currid))
         self.btn_addcardimage.image = addcardimage
 
         #members edit user button image
-        editimage = PhotoImage(file=r'assets/gui/edit-btn.png')
+        editimage = PhotoImage(file=r'assets/gui/members/edit-btn.png')
         editimage = editimage.subsample(1,1)
-        self.btn_editimage = Button(self.root, bg="#ffffff", bd=0, image=editimage, command=lambda :self.changeUser(self.currid))
+        self.btn_editimage = Button(self.root, bg="#292929", bd=0, image=editimage, command=lambda :self.changeUser(self.currid))
         self.btn_editimage.image = editimage
 
         self.btn_saveimage = Button()
@@ -135,12 +135,12 @@ class gui:
         self.categorie_option = Button()
 
         #members pages left, right and count
-        leftimage = PhotoImage(file=r'assets/gui/left-btn.png')
+        leftimage = PhotoImage(file=r'assets/gui/members/left-btn.png')
         leftimage = leftimage.subsample(2,2)
         self.btn_left = Button(self.root, bg="#ffffff", bd=0, image=leftimage,command= lambda: self.left(self.searchlist, self.searchcount))
         self.btn_left.image = leftimage
 
-        rightimage = PhotoImage(file=r'assets/gui/right-btn.png')
+        rightimage = PhotoImage(file=r'assets/gui/members/right-btn.png')
         rightimage = rightimage.subsample(2, 2)
         self.btn_right = Button(self.root, bg="#ffffff", bd=0, image=rightimage,command= lambda: self.next(self.searchlist, self.searchcount))
         self.btn_right.image = rightimage
@@ -153,7 +153,7 @@ class gui:
         #members portmonee information
         self.lbl_saldo = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
         self.lbl_totaalsaldo = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
-        self.laatstbetaald = Label(self.root, text="", bg='#ffffff', fg='#eba73b', font='Helvetica 14 bold')
+        self.laatstbetaald = Label(self.root, text="", bg='#ffffff', fg='#eba73b', font='Helvetica 12 bold')
 
         #transactie maken
         self.lbl_transmsg = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
@@ -288,27 +288,27 @@ class gui:
         self.lbl_lastname.place(x=620,y=231)
         self.lbl_categorie.place(x=595,y=291)
         self.lbl_msg.place(x=580,y=110)
-        '''
 
         self.lbl_transmsg["text"] = ""
         self.lbl_saldo["text"] = ""
         self.lbl_totaalsaldo["text"] = ""
         self.laatstbetaald["text"] = ""
 
-        self.lbl_saldo.place(x=890,y=217)
-        self.lbl_totaalsaldo.place(x=985, y=296)
-        self.laatstbetaald.place(x=925,y=254)
+        self.lbl_saldo.place(x=330,y=411)
+        self.lbl_totaalsaldo.place(x=342, y=510)
+        self.laatstbetaald.place(x=338,y=465)
 
-        self.btn_addimage.place(x=248,y=108)
-        self.btn_addcardimage.place(x=313,y=100)
-        self.btn_editimage.place(x=385,y=100)
+        self.btn_addimage.place(x=1035,y=108)
+        self.btn_addcardimage.place(x=1080,y=109)
+        self.btn_editimage.place(x=1130,y=107)
 
+        #wnr meer zelfde naam aantal hvl verschillende
         self.lbl_count["text"] = ""
-        self.lbl_count.place(x=555, y=458)
+        self.lbl_count.place(x=5, y=458)
         self.btn_transactie.place(x=990,y=445)
         self.lbl_transmsg.place(x=830,y=490)
         self.transactie_entry.place(x=830,y=448,width=150,height=40)
-        '''
+
 
     def navAdd(self):
         self.hideAll()
@@ -471,19 +471,19 @@ class gui:
         self.lbl_count["text"] = ""
         #hide everything -> all textboxes and unhide lbls
         self.btn_saveimage.place_forget()
-        self.btn_editimage.place(x=385, y=100)
+        self.btn_editimage.place(x=1130, y=107)
         self.name_text.place_forget()
         self.lastname_text.place_forget()
         self.categorie_option.place_forget()
 
         self.lbl_name["text"] = p_name
-        self.lbl_name.place(x=520,y=255)
+        self.lbl_name.place(x=550, y=171)
         
         self.lbl_lastname["text"] = p_lastname
-        self.lbl_lastname.place(x=520,y=335)
+        self.lbl_lastname.place(x=620, y=231)
 
         self.lbl_categorie["text"] = p_categorie
-        self.lbl_categorie.place(x=520,y=415)
+        self.lbl_categorie.place(x=595, y=291)
 
         mber = self.searchMember(p_id)
         #change json
@@ -535,31 +535,30 @@ class gui:
 
         #make entry's
         name_var = StringVar(self.root)
-        self.name_text = tk.Entry(self.root, textvariable=name_var, bg='#ffffff', bd=0,highlightthickness=2 ,width=18)
+        self.name_text = tk.Entry(self.root, textvariable=name_var, bg='#ffffff', bd=0,highlightthickness=1 ,width=18)
         self.name_text.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
         self.name_text.insert(END, mber.name)
-        self.name_text.place(x=520,y=255,width=200,height=40)
+        self.name_text.place(x=555,y=173,width=200,height=35)
 
         lastname_var = StringVar(self.root)
-        self.lastname_text = tk.Entry(self.root, textvariable=lastname_var, bg='#ffffff', highlightthickness=2, bd=0, width=18)
+        self.lastname_text = tk.Entry(self.root, textvariable=lastname_var, bg='#ffffff', highlightthickness=1, bd=0, width=18)
         self.lastname_text.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
         self.lastname_text.insert(END, mber.lastname)
-        self.lastname_text.place(x=520,y=335,width=200,height=40)
+        self.lastname_text.place(x=625,y=233,width=200,height=35)
 
         categorie_var = StringVar(self.root)
         for k in range(len(self.OPTIONS)):
             if mber.categorie == self.OPTIONS[k]:
                 categorie_var.set(self.OPTIONS[k])
-
         self.categorie_option = OptionMenu(self.root, categorie_var, *self.OPTIONS)
         self.categorie_option["bd"] = 0
-        self.categorie_option.place(x=520,y=415)
+        self.categorie_option.place(x=595,y=295)
 
-        saveimage = PhotoImage(file=r'assets/gui/save-btn.png')
+        saveimage = PhotoImage(file=r'assets/gui/members/save-btn.png')
         saveimage = saveimage.subsample(1,1)
-        self.btn_saveimage = Button(self.root, bg="#ffffff", bd=0, image=saveimage, command=lambda: self.saveEdit(p_id, name_var.get(), lastname_var.get(), categorie_var.get()))
+        self.btn_saveimage = Button(self.root, bg="#292929", bd=0, image=saveimage, command=lambda: self.saveEdit(p_id, name_var.get(), lastname_var.get(), categorie_var.get()))
         self.btn_saveimage.image = saveimage
-        self.btn_saveimage.place(x=385,y=100)
+        self.btn_saveimage.place(x=1130, y=107)
 
     def addcardimage(self,p_id):
         mber = self.searchMember(p_id)
@@ -993,7 +992,6 @@ class gui:
 
         return list
 
-
     def hideAll(self):
         # hiding main dash
         self.lbl_AantalMembers.place_forget()
@@ -1016,6 +1014,10 @@ class gui:
         self.panel.place_forget()
         self.treedh.place_forget()
         self.scrollbardh.place_forget()
+        self.name_text.place_forget()
+        self.lastname_text.place_forget()
+        self.categorie_option.place_forget()
+        self.btn_saveimage.place_forget()
 
         # showing member dash
         self.labelsearch.place_forget()
