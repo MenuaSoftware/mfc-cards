@@ -49,8 +49,8 @@ class gui:
         for j in data['transacties']:
             p_tid = j['Id']
             p_tmemberid = j['Member_Id']
-            p_tamount = ['Amount']
-            p_tdate = ['Date']
+            p_tamount = j['Amount']
+            p_tdate = j['Date']
             tt = transactie(p_tid,p_tmemberid,p_tamount,p_tdate)
             self.transacties.append(tt)
 
@@ -157,7 +157,7 @@ class gui:
 
         #transactie maken
         self.lbl_transmsg = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
-        transactieimage = PhotoImage(file=r'assets/gui/createtrans-btn.png')
+        transactieimage = PhotoImage(file=r'assets/gui/members/betalen-btn.png')
         transactieimage = transactieimage.subsample(1, 1)
         var_transactie = StringVar(self.root)
         self.transactie_entry = Entry(self.root, textvariable=var_transactie, bg='#ffffff', highlightthickness=2,bd=0)
@@ -262,6 +262,24 @@ class gui:
         self.noFotodh.configure(yscroll=self.scrollbarNoFotodhdh.set)
         self.scrollbarNoFotodhdh.place(x=1139, y=316, height=334)
 
+
+
+        #********Gridview UserTransacties********
+        # columns
+        columns = ('#1', '#2','#3')
+        self.userTransactiesdh = ttk.Treeview(self.root, columns=columns, show='headings')
+        # define headings
+        self.userTransactiesdh.column("#1", width=50)
+        self.userTransactiesdh.heading('#1', text='Id')
+        self.userTransactiesdh.column("#2", width=50)
+        self.userTransactiesdh.heading('#2', text='Amount')
+        self.userTransactiesdh.column("#3", width=50)
+        self.userTransactiesdh.heading('#3', text='Date')
+
+        # add a scrollbar
+        self.scrollbaruserTransactiesdh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.userTransactiesdh.yview)
+        self.userTransactiesdh.configure(yscroll=self.scrollbaruserTransactiesdh.set)
+
         self.lbl_AantalMembers = Label(self.root, text=self.getTotalMembers(), bg='#ffffff', fg='#1f1f1f', font='Helvetica 32')
         self.lbl_AantalMembers.place(x=398,y=120)
 
@@ -275,6 +293,15 @@ class gui:
 
         self.root.resizable(False, False)
         self.root.mainloop()
+
+    def getUserTransacties(self,p_userId):
+        list = []
+        for i in self.transacties:
+            print(i.amount)
+            if i.member_id == p_userId:
+                list.append(("#"+str(i.id),i.amount, i.date))
+
+        return list
 
     def navMembers(self):
         self.hideAll()
@@ -305,9 +332,10 @@ class gui:
         #wnr meer zelfde naam aantal hvl verschillende
         self.lbl_count["text"] = ""
         self.lbl_count.place(x=5, y=458)
-        self.btn_transactie.place(x=990,y=445)
-        self.lbl_transmsg.place(x=830,y=490)
-        self.transactie_entry.place(x=830,y=448,width=150,height=40)
+
+        self.btn_transactie.place(x=990,y=275)
+        self.lbl_transmsg.place(x=990,y=255)
+        self.transactie_entry.place(x=990,y=211,width=150,height=40)
 
 
     def navAdd(self):
@@ -630,6 +658,8 @@ class gui:
         p_id = p_id.capitalize()
         mmber = self.searchmoremembers(p_id)
 
+
+
         if(mmber == False):
             self.lbl_msg["text"] = "Member not found!"
             self.lbl_msg["fg"] = "#f55b5b"
@@ -658,12 +688,17 @@ class gui:
                 self.panel.image = img
                 self.panel.place(x=257, y=189)
 
-
             self.btn_left.place(x=530,y=460)
             self.searchlist = mmber
             self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
             self.searchcount = 1
             self.btn_right.place(x=590,y=460)
+            # generate sample data
+            contacts = self.getUserTransacties(mmber[0].id)
+            # adding data to the treeview
+            for contact in contacts:
+                self.userTransactiesdh.insert('', tk.END, values=contact)
+            self.userTransactiesdh.place(x=200, y=500)
         else:
             self.btn_left.place_forget()
             self.btn_right.place_forget()
@@ -692,6 +727,12 @@ class gui:
                 self.panel.place(x=257,y=189)
             else:
                 self.panel.place_forget()
+            # generate sample data
+            contacts = self.getUserTransacties(mmber.id)
+            # adding data to the treeview
+            for contact in contacts:
+                self.userTransactiesdh.insert('', tk.END, values=contact)
+            self.userTransactiesdh.place(x=200, y=500)
 
     def next(self,list,curr):
         self.panel.place_forget()
@@ -1047,6 +1088,7 @@ class gui:
         self.btn_transactie.place_forget()
         self.lbl_transmsg.place_forget()
         self.transactie_entry.place_forget()
+        self.userTransactiesdh.place_forget()
 
     def currNav(self,p_window):
         if(p_window=="dashboard"):

@@ -1,7 +1,12 @@
 #members venster
 transacties
-create betaling
+    Lijst wissen na iemand anders zoeken
+    Juiste plek zetten
 page left right
+    Count
+    Left
+    Right
+Picture placement
 
 
 
