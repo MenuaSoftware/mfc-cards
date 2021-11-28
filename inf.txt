@@ -1,28 +1,34 @@
+#Todo list
+#---------------------------
 #members venster
-transacties
-    Lijst wissen na iemand anders zoeken
-    Juiste plek zetten
-page left right
-    Count
-    Left
-    Right
-Picture placement
-
-
 
 #Add venster
 Gebruiker aanmaken ui
 gebruiker excel file ook lezen wnr gebruiker is lid geworden voor saldo etc te berekenen op basis daarop
 
-#Transacties
-geeft alle transacties weer, filteren in transacties
-
-
+#System
 -fix naam op kaart 3cijfers mensen naam kleiner maken
--fix datum verandering van verval datum
+
 -Linken met mongoDB
 	Bij openen na kijken naar json file en schrijven wat veranderd is
 		-mss hiervoor een speciaal json maken met alle veranderingen gedaan waar nog geen internet is
 	en bij sluiten ook kijken dus gwn zelfde functie bij sluiten en openen
 
+-installer msi
 -exe maken
+
+
+
+#vandaag
+-fix datum verandering van verval datum
+    ->hy voegt gwn bij elke opstart een maand bij,
+    ->fucntie checkSaldo iets fout, hy moet kijken per member er gaat hier iets fout !!!
+-GUI voor add venster
+-Kaarten map veranderd weizigen voor pass terug aanmaken
+
+
+
+
+Alles om te schrijven op gui enzo wordt gelezen uit JSON file
+Er wordt GESCHREVEN naar mongo in geval van weizigen.(ook de json file wordt veranderd)
+Er wordt GELEZEN van mongo wnr programma start, en hiermaa wordt er een json file aangemaakt

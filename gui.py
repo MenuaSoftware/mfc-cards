@@ -39,6 +39,8 @@ class gui:
             p_saldo = i['Saldo']
             p_totaalsaldo = i['TotaalSaldo']
             p_transacties = i['Transacties']
+            #paydate needs to been counted,
+            nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
             p_paydate = i['PayDate']
             payd = datetime.strptime(p_paydate, '%d-%m-%Y').date()
             trans = self.stringToList(p_transacties)
@@ -136,12 +138,12 @@ class gui:
 
         #members pages left, right and count
         leftimage = PhotoImage(file=r'assets/gui/members/left-btn.png')
-        leftimage = leftimage.subsample(2,2)
+        leftimage = leftimage.subsample(1,1)
         self.btn_left = Button(self.root, bg="#ffffff", bd=0, image=leftimage,command= lambda: self.left(self.searchlist, self.searchcount))
         self.btn_left.image = leftimage
 
         rightimage = PhotoImage(file=r'assets/gui/members/right-btn.png')
-        rightimage = rightimage.subsample(2, 2)
+        rightimage = rightimage.subsample(1, 1)
         self.btn_right = Button(self.root, bg="#ffffff", bd=0, image=rightimage,command= lambda: self.next(self.searchlist, self.searchcount))
         self.btn_right.image = rightimage
 
@@ -262,19 +264,21 @@ class gui:
         self.noFotodh.configure(yscroll=self.scrollbarNoFotodhdh.set)
         self.scrollbarNoFotodhdh.place(x=1139, y=316, height=334)
 
-
-
         #********Gridview UserTransacties********
         # columns
-        columns = ('#1', '#2','#3')
+        columns = ('#1', '#2','#3','#4','#5')
         self.userTransactiesdh = ttk.Treeview(self.root, columns=columns, show='headings')
         # define headings
         self.userTransactiesdh.column("#1", width=50)
         self.userTransactiesdh.heading('#1', text='Id')
-        self.userTransactiesdh.column("#2", width=50)
+        self.userTransactiesdh.column("#2", width=75)
         self.userTransactiesdh.heading('#2', text='Amount')
-        self.userTransactiesdh.column("#3", width=50)
+        self.userTransactiesdh.column("#3", width=100)
         self.userTransactiesdh.heading('#3', text='Date')
+        self.userTransactiesdh.column("#4", width=99)
+        self.userTransactiesdh.heading('#4', text='Naam')
+        self.userTransactiesdh.column("#5", width=150)
+        self.userTransactiesdh.heading('#5', text='Achternaam')
 
         # add a scrollbar
         self.scrollbaruserTransactiesdh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.userTransactiesdh.yview)
@@ -296,10 +300,10 @@ class gui:
 
     def getUserTransacties(self,p_userId):
         list = []
+        mber = self.searchMember(p_userId)
         for i in self.transacties:
-            print(i.amount)
             if i.member_id == p_userId:
-                list.append(("#"+str(i.id),i.amount, i.date))
+                list.append(("#"+str(i.id),"€"+str(i.amount), i.date,mber.name, mber.lastname))
 
         return list
 
@@ -331,12 +335,11 @@ class gui:
 
         #wnr meer zelfde naam aantal hvl verschillende
         self.lbl_count["text"] = ""
-        self.lbl_count.place(x=5, y=458)
+        self.lbl_count.place(x=298, y=560)
 
         self.btn_transactie.place(x=990,y=275)
         self.lbl_transmsg.place(x=990,y=255)
         self.transactie_entry.place(x=990,y=211,width=150,height=40)
-
 
     def navAdd(self):
         self.hideAll()
@@ -393,19 +396,20 @@ class gui:
             self.noFotodh.insert('', tk.END, values=contact)
 
     def transactieCreate(self,amount,p_id):
-        #aanmaken transactie
-        today = date.today()
-        today = today.strftime('%d-%m-%Y')
-        tt = transactie(self.transactie_id,p_id,amount,today)
-        self.transacties.append(tt)
-        self.transactie_id += 1
         mber = self.searchMember(p_id)
-
-        list = mber.transacties
-        list.append(tt.id)
-        mber.transacties = list
-        saldo = mber.saldo - amount
         if(mber.saldo!=0 and amount != 0):
+            # aanmaken transactie
+            today = date.today()
+            today = today.strftime('%d-%m-%Y')
+            tt = transactie(self.transactie_id, p_id, amount, today)
+            self.transacties.append(tt)
+            self.transactie_id += 1
+
+            list = mber.transacties
+            list.append(tt.id)
+            mber.transacties = list
+            saldo = mber.saldo - amount
+            self.setUserTransactiondh(mber.id)
             totaalsaldo = mber.totaalsaldo + amount
             transactiels = self.listToString(list)
 
@@ -469,11 +473,11 @@ class gui:
         width, height = foto.size
         if (width == 2480 and height == 3508):
             im = foto.crop((0, 0, width - 2067, height - 2977))
-            im = im.resize((138, 176), Image.ANTIALIAS)
+            im = im.resize((177, 227), Image.ANTIALIAS)
             im = ImageTk.PhotoImage(im)
         else:
             im = foto.crop((226, 353, width - 226, height - 353))
-            im = im.resize((138, 176), Image.ANTIALIAS)
+            im = im.resize((177, 227), Image.ANTIALIAS)
             im = ImageTk.PhotoImage(im)
 
 
@@ -539,16 +543,16 @@ class gui:
         self.lbl_categorie["text"] = mmber[self.searchcount-1].categorie
         if (mmber[self.searchcount-1].foto != ""):
             img = Image.open(mmber[self.searchcount-1].foto)
-            img = img.resize((235, 303), Image.ANTIALIAS)
+            img = img.resize((177, 227), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(img)
             self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
             self.panel["image"] = img
             self.panel.image = img
-            self.panel.place(x=257, y=189)
+            self.panel.place(x=255,y=166)
 
-        self.btn_left.place(x=530, y=460)
+        self.btn_left.place(x=258, y=560)
         self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
-        self.btn_right.place(x=590, y=460)
+        self.btn_right.place(x=340, y=560)
 
     def changeUser(self,p_id):
         self.btn_left.place_forget()
@@ -620,10 +624,12 @@ class gui:
             self.replaceFoto(mmber.id,pic)
             #toevoegen member
             mmber.foto = pic
-            im = im.resize((235, 303), Image.ANTIALIAS)
+            im = im.resize((177, 227), Image.ANTIALIAS)
             img = ImageTk.PhotoImage(im)
+            self.panel.place_forget()
             self.panel["image"] = img
             self.panel.image = img
+            self.panel.place(x=255, y=166)
             self.lbl_msg['text'] = "foto succesvol veranderd!"
             self.lbl_msg['fg'] = "#76c96b"
 
@@ -681,24 +687,21 @@ class gui:
             self.laatstbetaald["text"] = shortDate
             if (mmber[0].foto != ""):
                 img = Image.open(mmber[0].foto)
-                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = img.resize((177, 227), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
                 self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
                 self.panel["image"] = img
                 self.panel.image = img
-                self.panel.place(x=257, y=189)
+                self.panel.place(x=255,y=166)
 
-            self.btn_left.place(x=530,y=460)
+            self.btn_left.place(x=258,y=560)
             self.searchlist = mmber
             self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
             self.searchcount = 1
-            self.btn_right.place(x=590,y=460)
-            # generate sample data
-            contacts = self.getUserTransacties(mmber[0].id)
-            # adding data to the treeview
-            for contact in contacts:
-                self.userTransactiesdh.insert('', tk.END, values=contact)
-            self.userTransactiesdh.place(x=200, y=500)
+            self.btn_right.place(x=340,y=560)
+
+            self.setUserTransactiondh(mmber[0].id)
+
         else:
             self.btn_left.place_forget()
             self.btn_right.place_forget()
@@ -719,20 +722,16 @@ class gui:
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
-                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = img.resize((177, 227), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
                 self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
                 self.panel["image"] = img
                 self.panel.image = img
-                self.panel.place(x=257,y=189)
+                self.panel.place(x=255,y=166)
             else:
                 self.panel.place_forget()
-            # generate sample data
-            contacts = self.getUserTransacties(mmber.id)
-            # adding data to the treeview
-            for contact in contacts:
-                self.userTransactiesdh.insert('', tk.END, values=contact)
-            self.userTransactiesdh.place(x=200, y=500)
+
+            self.setUserTransactiondh(mmber.id)
 
     def next(self,list,curr):
         self.panel.place_forget()
@@ -742,6 +741,7 @@ class gui:
             self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
             mmber = list[curr]
             self.currid = mmber.id
+            self.setUserTransactiondh(self.currid)
             self.lbl_msg["text"] = ""
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
@@ -753,12 +753,12 @@ class gui:
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
-                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = img.resize((177, 227), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
                 self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
                 self.panel["image"] = img
                 self.panel.image = img
-                self.panel.place(x=257,y=189)
+                self.panel.place(x=255,y=166)
             else:
                 self.panel.place_forget()
 
@@ -769,6 +769,7 @@ class gui:
             self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
             mmber = list[curr-2]
             self.currid = mmber.id
+            self.setUserTransactiondh(self.currid)
             self.lbl_msg["text"] = ""
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
@@ -779,12 +780,12 @@ class gui:
             self.currid = mmber.id
             if(mmber.foto != ""):
                 img = Image.open(mmber.foto)
-                img = img.resize((235, 303), Image.ANTIALIAS)
+                img = img.resize((177, 227), Image.ANTIALIAS)
                 img = ImageTk.PhotoImage(img)
                 self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
                 self.panel["image"] = img
                 self.panel.image = img
-                self.panel.place(x=257,y=189)
+                self.panel.place(x=255,y=166)
             else:
                 self.panel.place_forget()
 
@@ -998,21 +999,29 @@ class gui:
         today = date.today()
         today = today.strftime('%d-%m-%Y')
 
-        nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
-        nxt = nextmonth.strftime('%d-%m-%Y')
+        print("-------------" + str(p_member.id) + "-------------")
+        print("paydate: " + currdatum)
+        print("today date: " + today)
 
-        if(today == currdatum):
-            #saldo aanpassen in json
-            # datum aanpassen in json
+
+        if(p_member.paydate<=date.today()):
+            #check voor categorie
+            amount = 0
+            if(p_member.categorie == "Jeugd"):
+                amount = 25
+            else:
+                amount = 35
+            #next paydate
+            nextmonth = p_member.paydate + relativedelta.relativedelta(months=1)
+            nextmonth = nextmonth.strftime('%d-%m-%Y')
+            print("nextmonth: " + nextmonth)
+            #voeg waarde saldo en nieuwe paydate toe aan json en member
             with open('data.json') as file:
                 data = json.load(file)
             for i in data['members']:
                 if p_member.id == i['Id']:
-                    if(i["Categorie"]=="Jeugd"):
-                        i["Saldo"] += 25
-                    else:
-                        i["Saldo"] += 35
-                    i["PayDate"] = nxt
+                    i["Saldo"] += amount
+                    i["PayDate"] = nextmonth
             with open('data.json', 'w') as file:
                 json.dump(data, file, indent=2)
 
@@ -1022,8 +1031,7 @@ class gui:
                 p_member.saldo += 25
             else:
                 p_member.saldo += 35
-
-            p_member.paydate = nextmonth
+            p_member.paydate = p_member.paydate + relativedelta.relativedelta(months=1)
 
     def getNotPayed(self):
         list = []
@@ -1129,14 +1137,12 @@ class gui:
             self.membersselect["image"] = membimage
             self.membersselect.place(x=0, y=124)
 
-
     def getNoFoto(self):
         list = []
         for member in self.members:
             if(member.foto == ""):
                 list.append(("#"+str(member.id),member.name + " " + member.lastname))
         return list
-
 
     def getTotalMembers(self):
         return len(self.members)
@@ -1148,9 +1154,21 @@ class gui:
                 count += 1
         return count
 
-
     def getTotalTransactions(self):
         return len(self.transacties)
+
+    def setUserTransactiondh(self,p_memberId):
+        self.userTransactiesdh.place_forget()
+        #delte every item in list of trnasiton
+        for item in self.userTransactiesdh.get_children():
+            self.userTransactiesdh.delete(item)
+
+        # generate sample data
+        contacts = self.getUserTransacties(p_memberId)
+        # adding data to the treeview
+        for contact in contacts:
+            self.userTransactiesdh.insert('', tk.END, values=contact)
+        self.userTransactiesdh.place(x=474, y=401,height=215)
 
 
 
