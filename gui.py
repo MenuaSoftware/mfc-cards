@@ -85,6 +85,18 @@ class gui:
         self.membersselect.place(x=0,y=124)
 
         #add
+        addimage = PhotoImage(file="assets/gui/navbar/add-notselected.png")
+        self.addselect = Button(self.root,image=addimage,borderwidth=0,highlightthickness=0,command=self.navAdd)
+        self.addselect.image = addimage
+        self.addselect.place(x=0,y=176)
+
+        #transacties
+        transactiesimage = PhotoImage(file="assets/gui/navbar/transacties-notselected.png")
+        self.transactiesselect = Button(self.root,image=transactiesimage,borderwidth=0,highlightthickness=0,command=self.navTransacties)
+        self.transactiesselect.image = transactiesimage
+        self.transactiesselect.place(x=0,y=228)
+
+        #add
         #transaction
 
 
@@ -96,6 +108,11 @@ class gui:
         #members main backgound
         srchmb = PhotoImage(file="assets/gui/members/members-main.png")
         self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0)
+
+        # members main backgound
+        srchmb = PhotoImage(file="assets/gui/add/add-main.png")
+        self.addmain = Label(self.root, image=srchmb, borderwidth=0, highlightthickness=0)
+
 
         #members main searchbox
         var_txt = StringVar(self.root)
@@ -170,16 +187,15 @@ class gui:
 
 
         #add add user image
-        browseimage = PhotoImage(file=r'assets/gui/browse-btn.png')
+        browseimage = PhotoImage(file=r'assets/gui/add/img-btn.png')
         browseimage = browseimage.subsample(1,1)
 
         #Add import excel file
-        excelimage = PhotoImage(file=r'assets/gui/excel-btn.png')
+        excelimage = PhotoImage(file=r'assets/gui/add/excel-btn.png')
         excelimage = excelimage.subsample(1,1)
 
         #Add when picture added show here
-        imagewd = PhotoImage(file="assets/gui/image-wd.png")
-        self.imagewd = Label(self.root,image=imagewd,bg="#f5f5fa",borderwidth=0,highlightthickness=0)
+        self.imagewd = Label(self.root,bg="#f5f5fa",borderwidth=0,highlightthickness=0)
 
         #add error msg
         self.msg_lbl = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
@@ -295,6 +311,10 @@ class gui:
         self.lbl_AantalTransacties.place(x=1025,y=120)
 
 
+
+
+
+
         self.root.resizable(False, False)
         self.root.mainloop()
 
@@ -343,27 +363,14 @@ class gui:
 
     def navAdd(self):
         self.hideAll()
+        self.currNav("add")
+        self.addmain.place(x=204,y=72)
 
-        #show Add
-        self.labelcreate.place(x=204,y=72)
-        self.e3.place(x=270,y=381,width=210,height=38)
-        self.e2.place(x=270,y=276,width=210,height=38)
-        self.o4.place(x=270,y=486,width=210,height=38)
-        self.msg_lbl.place(x=270,y=530)
-        self.label_file_explorer.place(x=430,y=230)
-        self.indlabel.place(x=270,y=190)
-        self.buttonRun.place(x=270,y=555,width=105,height=38)
-        self.buttonImposition.place(x=445,y=555)
-        self.button_explore.place(x=430,y=190)
-        self.btn_excel.place(x=396,y=555)
-        self.treedh.place(x=590, y=160)
-        self.scrollbardh.place(x=918, y=160, height=228)
-        self.treedh.delete(*self.treedh.get_children())
-        # generate sample data
-        contacts = self.getNotPayed()
-        # adding data to the treeview
-        for contact in contacts:
-            self.treedh.insert('', tk.END, values=contact)
+
+
+    def navTransacties(self):
+        self.hideAll()
+        self.currNav("transacties")
 
     def navDashboard(self):
         self.hideAll()
@@ -377,7 +384,6 @@ class gui:
         self.lbl_AantalTransacties.place(x=1025,y=120)
         self.lbl_AantalNietBetaald.place(x=715,y=120)
         self.lbl_AantalMembers.place(x=398,y=120)
-        self.btn_excel.place(x=0,y=0)
 
     def updateDash(self):
         self.lbl_AantalMembers["text"] = self.getTotalMembers()
@@ -1132,6 +1138,18 @@ class gui:
             self.dashselect["image"] = dashimage
             self.dashselect.place(x=0, y=72)
 
+            self.addselect.place_forget()
+            addimage = PhotoImage(file="assets/gui/navbar/add-notselected.png")
+            self.addselect.image = addimage
+            self.addselect["image"] = addimage
+            self.addselect.place(x=0, y=176)
+
+            self.transactiesselect.place_forget()
+            transactiesimage = PhotoImage(file="assets/gui/navbar/transacties-notselected.png")
+            self.transactiesselect.image = transactiesimage
+            self.transactiesselect["image"] = transactiesimage
+            self.transactiesselect.place(x=0, y=228)
+
         elif(p_window=="members"):
             # hide all onnodige
             self.dashselect.place_forget()
@@ -1150,6 +1168,80 @@ class gui:
             self.membersselect.image = membimage
             self.membersselect["image"] = membimage
             self.membersselect.place(x=0, y=124)
+
+            self.addselect.place_forget()
+            addimage = PhotoImage(file="assets/gui/navbar/add-notselected.png")
+            self.addselect.image = addimage
+            self.addselect["image"] = addimage
+            self.addselect.place(x=0, y=176)
+
+            self.transactiesselect.place_forget()
+            transactiesimage = PhotoImage(file="assets/gui/navbar/transacties-notselected.png")
+            self.transactiesselect.image = transactiesimage
+            self.transactiesselect["image"] = transactiesimage
+            self.transactiesselect.place(x=0, y=228)
+
+        elif(p_window=="add"):
+            # hide all onnodige
+            self.dashselect.place_forget()
+
+            # alle onnodige op notselected zetten
+            # dashboard
+            dashimage = PhotoImage(file="assets/gui/navbar/dashboard-notselected.png")
+            self.dashselect.image = dashimage
+            self.dashselect["image"] = dashimage
+            self.dashselect.place(x=0, y=72)
+
+            # navbar dashboard select maken
+            # members
+            self.membersselect.place_forget()
+            membimage = PhotoImage(file="assets/gui/navbar/members-notselected.png")
+            self.membersselect.image = membimage
+            self.membersselect["image"] = membimage
+            self.membersselect.place(x=0, y=124)
+
+            self.addselect.place_forget()
+            addimage = PhotoImage(file="assets/gui/navbar/add-selected.png")
+            self.addselect.image = addimage
+            self.addselect["image"] = addimage
+            self.addselect.place(x=0, y=176)
+
+            self.transactiesselect.place_forget()
+            transactiesimage = PhotoImage(file="assets/gui/navbar/transacties-notselected.png")
+            self.transactiesselect.image = transactiesimage
+            self.transactiesselect["image"] = transactiesimage
+            self.transactiesselect.place(x=0, y=228)
+
+        elif(p_window=="transacties"):
+            # hide all onnodige
+            self.dashselect.place_forget()
+
+            # alle onnodige op notselected zetten
+            # dashboard
+            dashimage = PhotoImage(file="assets/gui/navbar/dashboard-notselected.png")
+            self.dashselect.image = dashimage
+            self.dashselect["image"] = dashimage
+            self.dashselect.place(x=0, y=72)
+
+            # navbar dashboard select maken
+            # members
+            self.membersselect.place_forget()
+            membimage = PhotoImage(file="assets/gui/navbar/members-notselected.png")
+            self.membersselect.image = membimage
+            self.membersselect["image"] = membimage
+            self.membersselect.place(x=0, y=124)
+
+            self.addselect.place_forget()
+            addimage = PhotoImage(file="assets/gui/navbar/add-notselected.png")
+            self.addselect.image = addimage
+            self.addselect["image"] = addimage
+            self.addselect.place(x=0, y=176)
+
+            self.transactiesselect.place_forget()
+            transactiesimage = PhotoImage(file="assets/gui/navbar/transacties-selected.png")
+            self.transactiesselect.image = transactiesimage
+            self.transactiesselect["image"] = transactiesimage
+            self.transactiesselect.place(x=0, y=228)
 
     def getNoFoto(self):
         list = []

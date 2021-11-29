@@ -3,8 +3,14 @@
 #members venster
 
 #Add venster
-Gebruiker aanmaken ui
-gebruiker excel file ook lezen wnr gebruiker is lid geworden voor saldo etc te berekenen op basis daarop
+->id locatie voor volgende user
+->error msg toevoegen op ui
+->entry's van naam achternaam en categorie
+-> image btn
+->excel btn
+->impos btn
+->btn run
+
 
 #System
 -fix naam op kaart 3cijfers mensen naam kleiner maken
