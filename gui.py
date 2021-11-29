@@ -377,6 +377,7 @@ class gui:
         self.lbl_AantalTransacties.place(x=1025,y=120)
         self.lbl_AantalNietBetaald.place(x=715,y=120)
         self.lbl_AantalMembers.place(x=398,y=120)
+        self.btn_excel.place(x=0,y=0)
 
     def updateDash(self):
         self.lbl_AantalMembers["text"] = self.getTotalMembers()
@@ -397,7 +398,7 @@ class gui:
 
     def transactieCreate(self,amount,p_id):
         mber = self.searchMember(p_id)
-        if(mber.saldo!=0 and amount != 0):
+        if(mber.saldo>0 and amount <= mber.saldo):
             # aanmaken transactie
             today = date.today()
             today = today.strftime('%d-%m-%Y')
@@ -523,36 +524,49 @@ class gui:
             data = json.load(file)
         for i in data['members']:
             if mber.id == i['Id']:
-                i['Name'] = p_name
-                i['LastName'] = p_lastname
-                i['Categorie'] = p_categorie
+                i['Name'] = p_name.capitalize()
+                i['LastName'] = p_lastname.capitalize()
+                i['Categorie'] = p_categorie.capitalize()
         with open('data.json', 'w') as file:
             json.dump(data, file, indent=2)
 
         #change member
-        mber.name = p_name
-        mber.lastname = p_lastname
-        mber.categorie = p_categorie
+        mber.name = p_name.capitalize()
+        mber.lastname = p_lastname.capitalize()
+        mber.categorie = p_categorie.capitalize()
 
         mmber = self.searchlist
 
         self.lbl_msg["text"] = ""
-        self.lbl_id["text"] = "#" + str(mmber[self.searchcount-1].id)
-        self.lbl_name["text"] = mmber[self.searchcount-1].name
-        self.lbl_lastname["text"] = mmber[self.searchcount-1].lastname
-        self.lbl_categorie["text"] = mmber[self.searchcount-1].categorie
-        if (mmber[self.searchcount-1].foto != ""):
-            img = Image.open(mmber[self.searchcount-1].foto)
-            img = img.resize((177, 227), Image.ANTIALIAS)
-            img = ImageTk.PhotoImage(img)
-            self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
-            self.panel["image"] = img
-            self.panel.image = img
-            self.panel.place(x=255,y=166)
-
-        self.btn_left.place(x=258, y=560)
-        self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
-        self.btn_right.place(x=340, y=560)
+        if(len(self.searchlist)!=0):
+            self.lbl_id["text"] = "#" + str(mmber[self.searchcount-1].id)
+            self.lbl_name["text"] = mmber[self.searchcount-1].name
+            self.lbl_lastname["text"] = mmber[self.searchcount-1].lastname
+            self.lbl_categorie["text"] = mmber[self.searchcount-1].categorie
+            if (mmber[self.searchcount - 1].foto != ""):
+                img = Image.open(mmber[self.searchcount - 1].foto)
+                img = img.resize((177, 227), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+                self.panel["image"] = img
+                self.panel.image = img
+                self.panel.place(x=255, y=166)
+            self.btn_left.place(x=258, y=560)
+            self.lbl_count["text"] = str(self.searchcount) + "/" + str(len(self.searchlist))
+            self.btn_right.place(x=340, y=560)
+        else:
+            self.lbl_id["text"] = "#" + str(mber.id)
+            self.lbl_name["text"] = mber.name
+            self.lbl_lastname["text"] = mber.lastname
+            self.lbl_categorie["text"] = mber.categorie
+            if (mber.foto != ""):
+                img = Image.open(mmber[self.searchcount - 1].foto)
+                img = img.resize((177, 227), Image.ANTIALIAS)
+                img = ImageTk.PhotoImage(img)
+                self.panel = Label(self.root, borderwidth=0, highlightthickness=0)
+                self.panel["image"] = img
+                self.panel.image = img
+                self.panel.place(x=255, y=166)
 
     def changeUser(self,p_id):
         self.btn_left.place_forget()

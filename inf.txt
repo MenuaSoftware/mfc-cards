@@ -20,11 +20,7 @@ gebruiker excel file ook lezen wnr gebruiker is lid geworden voor saldo etc te b
 
 
 #vandaag
--fix datum verandering van verval datum
-    ->hy voegt gwn bij elke opstart een maand bij,
-    ->fucntie checkSaldo iets fout, hy moet kijken per member er gaat hier iets fout !!!
 -GUI voor add venster
--Kaarten map veranderd weizigen voor pass terug aanmaken
 
 
 
