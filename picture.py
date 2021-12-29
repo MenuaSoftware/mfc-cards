@@ -41,7 +41,7 @@ class picture:
             naam = naam.capitalize()
             nm_text = naam
 
-            if(len(naam)>8):
+            if(len(naam)>=7):
                 mnt = 45
 
             title_font = ImageFont.truetype('assets/TTOctosquaresEXP-BoldIt.ttf', mnt)  # font

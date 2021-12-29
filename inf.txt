@@ -1,7 +1,9 @@
 #Todo list
 #---------------------------
-#members venster
 
+NEXT IMPORTANT TASKS
+---------------------------------------------------------------------------------------------
+#!!!
 #Add venster
 ->id locatie voor volgende user
 ->error msg toevoegen op ui
@@ -10,27 +12,50 @@
 ->excel btn
 ->impos btn
 ->btn run
+->update dashboard direct als gebruiker wordt aangemaakt
 
+#!!!
+#Transacties venster
+alle transacties weergeven in een lijst,
+met id, Amount, date, #gebruiker ID, gebruiker naam en achternaam samen
+---------------------------------------------------------------------------------------------
 
 #System
+#!!!
 -fix naam op kaart 3cijfers mensen naam kleiner maken
+-Als je categorie veranderd moet kleur op kaart ook veranderen
 
+#!!!
+-Gebruiker als wordt toegevoegd voor 16/11 dan is pay day 01/12 na of op 16 is da 01/01 dus als <16 => maand +1 anders >=16 maand +2
+    ->wordt gedaan bij ADD en EXCEL file
+
+(-zoeken op achternaam alleen, zoeken op achternaam met voornaam)
+
+-Gebruiker heeft een status (Actief en niet actief) als niet actief wordt niet weergegeven in alle lijst van niet betaald of geen foto
+ -> ook komt er in members een status bar die zegt of gebruiker actief is of niet
+
+ (#!!!)
+-Gebruiker heeft rekeningnummer
+    ->elke 1ste dag van maand gaat hy nakijken of iemand heeft betaalt, neemt lijst van uitreksel van afgelope maand, <- maak hiervan een klasse rekening die zo zender ontvanger heeft met amount,
+    verder kijkt hij in uitrelsel of die rekeningnummer heeft netaalt stel die rekeningnummer is bij meerdere mensen hetzelfde dan verdeeld hij de amount in aantal mensen en trekt af van de gebruikers hun saldo
+
+#!!!
 -Linken met mongoDB
 	Bij openen na kijken naar json file en schrijven wat veranderd is
 		-mss hiervoor een speciaal json maken met alle veranderingen gedaan waar nog geen internet is
 	en bij sluiten ook kijken dus gwn zelfde functie bij sluiten en openen
+    ->#Databank
+        Alles om te schrijven op gui enzo wordt gelezen uit JSON file
+        Er wordt GESCHREVEN naar mongo in geval van weizigen.(ook de json file wordt veranderd)
+        Er wordt GELEZEN van mongo wnr programma start, en hiermaa wordt er een json file aangemaakt
 
+#!!!
 -installer msi
 -exe maken
 
 
-
-#vandaag
--GUI voor add venster
-
-
-
-
-Alles om te schrijven op gui enzo wordt gelezen uit JSON file
-Er wordt GESCHREVEN naar mongo in geval van weizigen.(ook de json file wordt veranderd)
-Er wordt GELEZEN van mongo wnr programma start, en hiermaa wordt er een json file aangemaakt
+#volledig ander project
+->Web Applicatie maken van dit
+    ->template maken
+->GSM app maken van dit
+    ->template maken

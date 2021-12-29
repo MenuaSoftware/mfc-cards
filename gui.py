@@ -108,6 +108,7 @@ class gui:
         #members main backgound
         srchmb = PhotoImage(file="assets/gui/members/members-main.png")
         self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0)
+        self.labelsearch.image = srchmb
 
         # members main backgound
         srchmb = PhotoImage(file="assets/gui/add/add-main.png")
@@ -210,17 +211,15 @@ class gui:
         #input voor naam, achternaam en categorie
         var_name = StringVar(self.root)
         var_last_name = StringVar(self.root)
-        self.e2 = tk.Entry(self.root, textvariable=var_name, bg='#ffffff', highlightthickness=2,bd=0)
-        self.e2.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
-        self.e3 = tk.Entry(self.root, textvariable=var_last_name, bg='#ffffff', highlightthickness=2 ,bd=0)
-        self.e3.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
+        self.e2 = tk.Entry(self.root, textvariable=var_name, bg='#ffffff', highlightthickness=0,bd=0)
+        self.e3 = tk.Entry(self.root, textvariable=var_last_name, bg='#ffffff', highlightthickness=0 ,bd=0)
         var_categorie = StringVar(self.root)
         var_categorie.set(self.OPTIONS[0])
         self.o4 = OptionMenu(self.root, var_categorie, *self.OPTIONS)
 
 
         #Add Functie run -> om user aantemaken
-        self.buttonRun = Button(self.root, text="Create", bd=0, bg="#72b97e",fg="#ffffff",font='Helvetica 10 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
+        self.buttonRun = Button(self.root, text="Voeg toe", bd=0, bg="#8ece7c",fg="#ffffff",font='Helvetica 12 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
 
         #Add knop om aangemaakte gebruikers te sorteren
         sortimage = PhotoImage(file=r'assets/gui/sort-btn.png')
@@ -228,10 +227,10 @@ class gui:
         self.buttonImposition = Button(self.root, text="Imposition", bg="#ffffff", bd=0,image=sortimage,command=lambda: self.impos())
 
         indrs = self.index +1
-        self.indlabel = tk.Label(self.root, text="#"+str(indrs), bg='#ffffff', fg='#1f1f1f', pady=5, font='assets/SourceSansPro-Bold.ttf')
+        self.indlabel = tk.Label(self.root, text="#"+str(indrs), bg='#ffffff', fg='#1f1f1f', pady=5, font='assets/SourceSansPro-Bold.ttf 20 bold')
 
-        self.o4["highlightthickness"] = 2
-        self.o4.config(highlightbackground="#1f1f1f", highlightcolor="#1f1f1f")
+
+        self.o4.config(bg="#ffffff",bd=0)
         self.o4["bd"] = 0
 
         self.panel = Label()
@@ -310,11 +309,6 @@ class gui:
         self.lbl_AantalTransacties = Label(self.root, text=self.getTotalTransactions(), bg='#ffffff', fg='#1f1f1f', font='Helvetica 32')
         self.lbl_AantalTransacties.place(x=1025,y=120)
 
-
-
-
-
-
         self.root.resizable(False, False)
         self.root.mainloop()
 
@@ -366,7 +360,16 @@ class gui:
         self.currNav("add")
         self.addmain.place(x=204,y=72)
 
-
+        self.e3.place(x=480, y=345, width=210, height=32)
+        self.e2.place(x=480, y=233, width=210, height=32)
+        self.o4.place(x=483, y=473, width=210, height=32)
+        self.msg_lbl.place(x=254, y=450)
+        self.label_file_explorer.place(x=254, y=470)
+        self.indlabel.place(x=510, y=155)
+        self.buttonRun.place(x=255, y=405, width=177, height=38)
+        self.buttonImposition.place(x=0, y=0)
+        # self.button_explore.place(x=430, y=190) #-> place picture op juiste positie
+        self.btn_excel.place(x=100, y=100)
 
     def navTransacties(self):
         self.hideAll()
@@ -1117,6 +1120,7 @@ class gui:
         self.lbl_transmsg.place_forget()
         self.transactie_entry.place_forget()
         self.userTransactiesdh.place_forget()
+        self.addmain.place_forget()
 
     def currNav(self,p_window):
         if(p_window=="dashboard"):
