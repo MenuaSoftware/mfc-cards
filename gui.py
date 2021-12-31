@@ -202,8 +202,8 @@ class gui:
         self.msg_lbl = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 8')
         # Create a File Explorer label
         self.label_file_explorer = Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 6')
-        self.button_explore = Button(self.root, text="Browse Files",bg="#ffffff", bd=0,image=browseimage ,command=self.browseFiles)
-        self.btn_excel = Button(self.root, text="browse excel",bg="#ffffff", bd=0,image=excelimage ,command=self.readExcel)
+        self.button_explore = Button(self.root, text="Browse Files",bg="#282828", bd=0,image=browseimage ,command=self.browseFiles)
+        self.btn_excel = Button(self.root, text="browse excel",bg="#282828", bd=0,image=excelimage ,command=self.readExcel)
 
         #Add lijst van categorie
         self.OPTIONS = ["Volwassen", "Jeugd", "Vrouwen"]
@@ -222,9 +222,9 @@ class gui:
         self.buttonRun = Button(self.root, text="Voeg toe", bd=0, bg="#8ece7c",fg="#ffffff",font='Helvetica 12 bold',command=lambda: self.run(self.index, var_name.get(), var_last_name.get(), var_categorie.get()))
 
         #Add knop om aangemaakte gebruikers te sorteren
-        sortimage = PhotoImage(file=r'assets/gui/sort-btn.png')
+        sortimage = PhotoImage(file=r'assets/gui/add/impos-btn.png')
         sortimage = sortimage.subsample(1,1)
-        self.buttonImposition = Button(self.root, text="Imposition", bg="#ffffff", bd=0,image=sortimage,command=lambda: self.impos())
+        self.buttonImposition = Button(self.root, text="Imposition", bg="#282828", bd=0,image=sortimage,command=lambda: self.impos())
 
         indrs = self.index +1
         self.indlabel = tk.Label(self.root, text="#"+str(indrs), bg='#ffffff', fg='#1f1f1f', pady=5, font='assets/SourceSansPro-Bold.ttf 20 bold')
@@ -309,6 +309,30 @@ class gui:
         self.lbl_AantalTransacties = Label(self.root, text=self.getTotalTransactions(), bg='#ffffff', fg='#1f1f1f', font='Helvetica 32')
         self.lbl_AantalTransacties.place(x=1025,y=120)
 
+        # Add image file
+        transbg = PhotoImage(file="assets/gui/transacties/transacties-main.png")
+
+        self.transactiesmain = Label(self.root,image=transbg,borderwidth=0, highlightthickness=0)
+
+
+        columns = ('#1', '#2','#3','#4','#5','#6','#7')
+        self.transactionsList = ttk.Treeview(self.root, columns=columns, show='headings')
+        # define headings
+        self.transactionsList.column("#1", width=85)
+        self.transactionsList.heading('#1', text='Id')
+        self.transactionsList.column("#2", width=150)
+        self.transactionsList.heading('#2', text='Date')
+        self.transactionsList.column("#3", width=150)
+        self.transactionsList.heading('#3', text='Amount')
+        self.transactionsList.column("#4", width=85)
+        self.transactionsList.heading('#4', text='Member Id')
+        self.transactionsList.column("#5", width=150)
+        self.transactionsList.heading('#5', text='Name')
+        self.transactionsList.column("#6", width=150)
+        self.transactionsList.heading('#6', text='Lastname')
+        self.transactionsList.column("#7", width=150)
+        self.transactionsList.heading('#7', text='Category')
+        self.scrollbartransactions = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.transactionsList.yview)
         self.root.resizable(False, False)
         self.root.mainloop()
 
@@ -367,13 +391,15 @@ class gui:
         self.label_file_explorer.place(x=254, y=470)
         self.indlabel.place(x=510, y=155)
         self.buttonRun.place(x=255, y=405, width=177, height=38)
-        self.buttonImposition.place(x=0, y=0)
-        # self.button_explore.place(x=430, y=190) #-> place picture op juiste positie
-        self.btn_excel.place(x=100, y=100)
+        self.buttonImposition.place(x=635, y=108)
+        self.button_explore.place(x=700, y=108) #-> place picture op juiste positie
+        self.btn_excel.place(x=670, y=108)
 
     def navTransacties(self):
         self.hideAll()
+        self.updateTrans()
         self.currNav("transacties")
+        self.transactiesmain.place(x=204, y=72)
 
     def navDashboard(self):
         self.hideAll()
@@ -387,6 +413,23 @@ class gui:
         self.lbl_AantalTransacties.place(x=1025,y=120)
         self.lbl_AantalNietBetaald.place(x=715,y=120)
         self.lbl_AantalMembers.place(x=398,y=120)
+
+    def updateTrans(self):
+        self.transactionsList.place_forget()
+        # delte every item in list of trnasiton
+        for item in self.transactionsList.get_children():
+            self.transactionsList.delete(item)
+        # generate sample data
+        contacts = self.getTransactions()
+        # adding data to the treeview
+        for contact in contacts:
+            self.transactionsList.insert('', tk.END, values=contact)
+        self.transactionsList.place(x=231, y=140,height=510)
+
+        # add a scrollbar
+
+        self.transactionsList.configure(yscroll=self.scrollbartransactions.set)
+        self.scrollbartransactions.place(x=1153, y=141, height=508)
 
     def updateDash(self):
         self.lbl_AantalMembers["text"] = self.getTotalMembers()
@@ -838,7 +881,15 @@ class gui:
             p_name = p_name.capitalize()
             p_lastname = p_lastname.capitalize()
 
-            nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
+            if (datetime.today().day < 16):
+                mm = datetime.today() + relativedelta.relativedelta(months=1)
+                tmp = "01-" + str(mm.month) + "-" + str(mm.year)
+                nextmonth = datetime.strptime(tmp, '%d-%m-%Y').date()
+            else:
+                mm = datetime.today() + relativedelta.relativedelta(months=2)
+                tmp = "01-" + str(mm.month) + "-" + str(mm.year)
+                nextmonth = datetime.strptime(tmp, '%d-%m-%Y').date()
+
             if(p_categorie == "Jeugd"):
                 amount = 85
             else:
@@ -849,6 +900,7 @@ class gui:
 
             trans = []
             trans.append(tt)
+
             shortDate = nextmonth.strftime('%d-%m-%Y')
             mm = member(p_id, p_name, p_lastname, p_categorie,0,amount,trans,nextmonth,pic)
             self.members.append(mm)
@@ -930,7 +982,14 @@ class gui:
             im = None
             pic=""
 
-            nextmonth = datetime.today() + relativedelta.relativedelta(months=1)
+            if (datetime.today().day < 16):
+                mm = datetime.today() + relativedelta.relativedelta(months=1)
+                tmp = "01-" + str(mm.month) + "-" + str(mm.year)
+                nextmonth = datetime.strptime(tmp, '%d-%m-%Y').date()
+            else:
+                mm = datetime.today() + relativedelta.relativedelta(months=2)
+                tmp = "01-" + str(mm.month) + "-" + str(mm.year)
+                nextmonth = datetime.strptime(tmp, '%d-%m-%Y').date()
             if(p_categorie == "Jeugd"):
                 amount = 85
             else:
@@ -1121,6 +1180,10 @@ class gui:
         self.transactie_entry.place_forget()
         self.userTransactiesdh.place_forget()
         self.addmain.place_forget()
+        self.transactiesmain.place_forget()
+
+        self.transactionsList.place_forget()
+        self.scrollbartransactions.place_forget()
 
     def currNav(self,p_window):
         if(p_window=="dashboard"):
@@ -1279,6 +1342,14 @@ class gui:
         for contact in contacts:
             self.userTransactiesdh.insert('', tk.END, values=contact)
         self.userTransactiesdh.place(x=474, y=401,height=215)
+
+    def getTransactions(self):
+        list = []
+        for transact in self.transacties:
+            mber = self.searchMember(transact.member_id)
+            list.append((transact.id,transact.date,transact.amount,"#"+ str(mber.id),mber.name,mber.lastname,mber.categorie))
+        list.reverse()
+        return list
 
 
 
