@@ -102,17 +102,17 @@ class gui:
 
         #dashboard main background
         crwd = PhotoImage(file="assets/gui/dashboard/dashboard-main.png")
-        self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0)
+        self.labelcreate = Label(self.root,image=crwd,borderwidth=0,highlightthickness=0,bg='#1f1f1f')
         self.labelcreate.place(x=204, y=72)
 
         #members main backgound
         srchmb = PhotoImage(file="assets/gui/members/members-main.png")
-        self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0)
+        self.labelsearch = Label(self.root,image=srchmb,borderwidth=0,highlightthickness=0,bg='#1f1f1f')
         self.labelsearch.image = srchmb
 
         # members main backgound
         srchmb = PhotoImage(file="assets/gui/add/add-main.png")
-        self.addmain = Label(self.root, image=srchmb, borderwidth=0, highlightthickness=0)
+        self.addmain = Label(self.root, image=srchmb, borderwidth=0, highlightthickness=0,bg='#1f1f1f')
 
 
         #members main searchbox
@@ -129,7 +129,7 @@ class gui:
         self.lbl_id = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 16 bold')
         self.lbl_name = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
         self.lbl_lastname = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
-        self.lbl_categorie = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
+        self.lbl_category = tk.Label(self.root, text="", bg='#ffffff', fg='#1f1f1f', font='Helvetica 18 bold')
 
         #members Change or add image of user button image
         addimage = PhotoImage(file=r'assets/gui/members/imgadd-btn.png')
@@ -261,22 +261,22 @@ class gui:
         #********Gridview No foto********
         # columns
         columns = ('#1', '#2')
-        self.noFotodh = ttk.Treeview(self.root, columns=columns, show='headings')
+        self.noPictureDh = ttk.Treeview(self.root, columns=columns, show='headings')
         # define headings
-        self.noFotodh.column("#1", width=50)
-        self.noFotodh.heading('#1', text='Id')
-        self.noFotodh.column("#2", width=287)
-        self.noFotodh.heading('#2', text='Naam')
+        self.noPictureDh.column("#1", width=50)
+        self.noPictureDh.heading('#1', text='Id')
+        self.noPictureDh.column("#2", width=287)
+        self.noPictureDh.heading('#2', text='Naam')
 
         # generate sample data
         contacts = self.getNoFoto()
         # adding data to the treeview
         for contact in contacts:
-            self.noFotodh.insert('', tk.END, values=contact)
-        self.noFotodh.place(x=799, y=316,height=335)
+            self.noPictureDh.insert('', tk.END, values=contact)
+        self.noPictureDh.place(x=799, y=316, height=335)
         # add a scrollbar
-        self.scrollbarNoFotodhdh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.noFotodh.yview)
-        self.noFotodh.configure(yscroll=self.scrollbarNoFotodhdh.set)
+        self.scrollbarNoFotodhdh = ttk.Scrollbar(self.root, orient=tk.VERTICAL, command=self.noPictureDh.yview)
+        self.noPictureDh.configure(yscroll=self.scrollbarNoFotodhdh.set)
         self.scrollbarNoFotodhdh.place(x=1139, y=316, height=334)
 
         #********Gridview UserTransacties********
@@ -312,7 +312,7 @@ class gui:
         # Add image file
         transbg = PhotoImage(file="assets/gui/transacties/transacties-main.png")
 
-        self.transactiesmain = Label(self.root,image=transbg,borderwidth=0, highlightthickness=0)
+        self.transactiesmain = Label(self.root,image=transbg,borderwidth=0, highlightthickness=0,bg='#1f1f1f')
 
 
         columns = ('#1', '#2','#3','#4','#5','#6','#7')
@@ -355,7 +355,7 @@ class gui:
         self.lbl_id.place(x=472,y=148)
         self.lbl_name.place(x=550,y=171)
         self.lbl_lastname.place(x=620,y=231)
-        self.lbl_categorie.place(x=595,y=291)
+        self.lbl_category.place(x=595, y=291)
         self.lbl_msg.place(x=580,y=110)
 
         self.lbl_transmsg["text"] = ""
@@ -408,7 +408,7 @@ class gui:
         self.labelcreate.place(x=204, y=72)
         self.treedh.place(x=258, y=316,height=335)
         self.scrollbardh.place(x=742, y=316, height=334)
-        self.noFotodh.place(x=799, y=316,height=335)
+        self.noPictureDh.place(x=799, y=316, height=335)
         self.scrollbarNoFotodhdh.place(x=1139, y=316, height=334)
         self.lbl_AantalTransacties.place(x=1025,y=120)
         self.lbl_AantalNietBetaald.place(x=715,y=120)
@@ -443,10 +443,10 @@ class gui:
             self.treedh.insert('', tk.END, values=contact)
 
         #update geen foto lijst
-        self.noFotodh.delete(*self.noFotodh.get_children())
+        self.noPictureDh.delete(*self.noPictureDh.get_children())
         contactsnoFoto = self.getNoFoto()
         for contact in contactsnoFoto:
-            self.noFotodh.insert('', tk.END, values=contact)
+            self.noPictureDh.insert('', tk.END, values=contact)
 
     def transactieCreate(self,amount,p_id):
         mber = self.searchMember(p_id)
@@ -541,7 +541,7 @@ class gui:
         #foto opladen
 
     def impos(self):
-        lenFiles = len(os.listdir("results/kaarten"))
+        lenFiles = len(os.listdir("results/cards"))
         if(lenFiles==0):
             self.msg_lbl["text"] = "no files found!"
             self.msg_lbl["fg"] = "#f55b5b"
@@ -567,8 +567,8 @@ class gui:
         self.lbl_lastname["text"] = p_lastname
         self.lbl_lastname.place(x=620, y=231)
 
-        self.lbl_categorie["text"] = p_categorie
-        self.lbl_categorie.place(x=595, y=291)
+        self.lbl_category["text"] = p_categorie
+        self.lbl_category.place(x=595, y=291)
 
         mber = self.searchMember(p_id)
         #change json
@@ -594,7 +594,7 @@ class gui:
             self.lbl_id["text"] = "#" + str(mmber[self.searchcount-1].id)
             self.lbl_name["text"] = mmber[self.searchcount-1].name
             self.lbl_lastname["text"] = mmber[self.searchcount-1].lastname
-            self.lbl_categorie["text"] = mmber[self.searchcount-1].categorie
+            self.lbl_category["text"] = mmber[self.searchcount - 1].categorie
             if (mmber[self.searchcount - 1].foto != ""):
                 img = Image.open(mmber[self.searchcount - 1].foto)
                 img = img.resize((177, 227), Image.ANTIALIAS)
@@ -610,7 +610,7 @@ class gui:
             self.lbl_id["text"] = "#" + str(mber.id)
             self.lbl_name["text"] = mber.name
             self.lbl_lastname["text"] = mber.lastname
-            self.lbl_categorie["text"] = mber.categorie
+            self.lbl_category["text"] = mber.categorie
             if (mber.foto != ""):
                 img = Image.open(mmber[self.searchcount - 1].foto)
                 img = img.resize((177, 227), Image.ANTIALIAS)
@@ -629,7 +629,7 @@ class gui:
         self.btn_editimage.place_forget()
         self.lbl_name.place_forget()
         self.lbl_lastname.place_forget()
-        self.lbl_categorie.place_forget()
+        self.lbl_category.place_forget()
 
         #make entry's
         name_var = StringVar(self.root)
@@ -676,13 +676,13 @@ class gui:
             width, height = foto.size
             if (width == 2480 and height == 3508):
                 im = foto.crop((0, 0, width - 2067, height - 2977))
-                pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + '.png'
+                pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + mmber.lastname +'.png'
                 im.save(pic)
                 self.label_file_explorer["text"] = ""
             else:
                 im = foto.crop((226, 353, width - 226, height - 353))
                 im = im.resize((413, 531), Image.ANTIALIAS)
-                pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + '.png'
+                pic = 'results/passfotos/' + str(mmber.id) + "-" + mmber.name + mmber.lastname + '.png'
                 im.save(pic)
                 self.label_file_explorer["text"] = ""
 
@@ -715,7 +715,7 @@ class gui:
         self.lbl_id["text"] = ""
         self.lbl_name["text"] = ""
         self.lbl_lastname["text"] = ""
-        self.lbl_categorie["text"] = ""
+        self.lbl_category["text"] = ""
         self.lbl_count["text"] = ""
         self.lbl_saldo["text"] = ""
         self.lbl_totaalsaldo["text"] = ""
@@ -742,7 +742,7 @@ class gui:
             self.lbl_id["text"] = "#" + str(mmber[0].id)
             self.lbl_name["text"] = mmber[0].name
             self.lbl_lastname["text"] = mmber[0].lastname
-            self.lbl_categorie["text"] = mmber[0].categorie
+            self.lbl_category["text"] = mmber[0].categorie
             if(mmber[0].saldo>0):
                 self.lbl_saldo["fg"] = "#f55b5b"
             else:
@@ -776,7 +776,7 @@ class gui:
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
-            self.lbl_categorie["text"] = mmber.categorie
+            self.lbl_category["text"] = mmber.categorie
             if(mmber.saldo>0):
                 self.lbl_saldo["fg"] = "#f55b5b"
             else:
@@ -812,7 +812,7 @@ class gui:
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
-            self.lbl_categorie["text"] = mmber.categorie
+            self.lbl_category["text"] = mmber.categorie
             self.lbl_saldo["text"] = mmber.saldo
             self.lbl_totaalsaldo["text"] = mmber.totaalsaldo
 
@@ -840,7 +840,7 @@ class gui:
             self.lbl_id["text"] = "#" + str(mmber.id)
             self.lbl_name["text"] = mmber.name
             self.lbl_lastname["text"] = mmber.lastname
-            self.lbl_categorie["text"] = mmber.categorie
+            self.lbl_category["text"] = mmber.categorie
             self.lbl_saldo["text"] = mmber.saldo
             self.lbl_totaalsaldo["text"] = mmber.totaalsaldo
             self.currid = mmber.id
@@ -1128,7 +1128,7 @@ class gui:
         self.lbl_AantalMembers.place_forget()
         self.lbl_AantalNietBetaald.place_forget()
         self.lbl_AantalTransacties.place_forget()
-        self.noFotodh.place_forget()
+        self.noPictureDh.place_forget()
         self.scrollbarNoFotodhdh.place_forget()
         self.labelcreate.place_forget()
         self.e3.place_forget()
@@ -1158,7 +1158,7 @@ class gui:
         self.lbl_id.place_forget()
         self.lbl_name.place_forget()
         self.lbl_lastname.place_forget()
-        self.lbl_categorie.place_forget()
+        self.lbl_category.place_forget()
         self.lbl_msg.place_forget()
 
         self.lbl_transmsg["text"] = ""

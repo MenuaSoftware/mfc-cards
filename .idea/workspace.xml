@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="773d863f-eb5e-4115-8a29-79fd2b3058fa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/lidkaart-pdf.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/Dashboard-select.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/Dashboard-unselect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/Members-select.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/Members-unselect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/Payments-select.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/Payments-unselect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/add/add-main.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/add/add-main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/addcard-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/browse-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/createmember-wd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/createtrans-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/dashboard/dashboard-main.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/dashboard/dashboard-main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/edit-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/excel-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/image-wd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/left-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/members/members-main.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/members/members-main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/add-notselected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/add-notselected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/add-selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/add-selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/dashboard-notselected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/dashboard-notselected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/dashboard-selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/dashboard-selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/members-notselected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/members-notselected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/members-selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/members-selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/transacties-notselected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/transacties-notselected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/navbar/transacties-selected.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/navbar/transacties-selected.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/right-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/save-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/search-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/searchmember-wd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/sort-btn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/theme.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/theme.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/gui/transacties/transacties-main.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/gui/transacties/transacties-main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/mfc-main.psd" beforeDir="false" afterPath="$PROJECT_DIR$/assets/mfc-main.psd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/1-NathanVan buynderen-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/10-PeterCave-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/100-EmirTahiri-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/101-IsraeTahiri-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/102-NoorTahiri-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/103-AsadullahManzoor-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/104-BilalMazraoui-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/105-DavidAgaian-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/106-IvanAlmeida-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/107-HoudaifaEl bouzid-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/108-DavidSafarian-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/109-BadrEl hajjioui-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/11-AmalEl koubal-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/110-LaurensPieters-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/111-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/112-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/113-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/114-SarkisGalstyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/115-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/116-RaniaAbbou-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/117-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/118-AliAzibou-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/119-AmineDarkaoui-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/12-MohamedEl lokmani-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/120-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/121-IdrisLjatifova-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/122-DjabizFellous-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/123-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/124-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/125-RedonSopjani-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/126-AleksBadalyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/127-ElisabethKrmoian-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/128-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/129-RaniaDarmach-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/13-WilliamVardanyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/130-RayanDarmach-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/131-Loris leoMehmedovic-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/132-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/133-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/134-IgorKazirod-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/135-UmarSaber-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/136-SanaSaber-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/137-KamranSaber-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/138-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/139-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/14-DominikRejek-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/140-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/141-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/142-LoukiliAdam-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/143-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/144-MohamedIbrahim-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/145-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/146-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/147-RaniaSakani-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/148-MarenRedig-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/149-WalidRchidi-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/15-SamwelVardanyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/150-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/151-EricNemes-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/16-AdemAvdulji-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/17-YasimAvdulji-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/18-AshotGevorgyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/19-JaydenHemmerechts-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/2-OmerButun-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/20-JeroenVerhanneman-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/21-Derenik Safaryan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/22-EdgarSafaryan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/23-AhmedEl kassimi-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/24-Achraf Boudriss-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/25-Rafael--jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/26-AdamBouchiki-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/27-EdmondKusov-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/28-BennyVan nele-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/29-StephanPetrosyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/3-KianoCeres-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/30-ArmenMelkonyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/31-VahanPetrosyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/32-FaysalYachou-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/33-MuradSargsyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/34-DavidSargsyan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/35-BilalYachou-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/36-FilipGrigoryan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/37-MohamedAkkabal-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/38-BrahimEl bouchali-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/39-IliasEl jattari-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/4-NoorGhara-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/40-AbdelaliEl jattari-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/41-HusseinAbduli-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/42-HamzaEl bouchali-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/43-JurgenDe ruyck-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/44-AminAvdulji-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/45-AchmedAvdulji-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/46-EsminRamicj-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/47-JeroenVerhanneman-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/48-Gevorg Minasyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/49-DavidChamsaryan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/5-MenuaHovhannisyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/50-KaramEl jaghdoufi-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/51-AdamEl jaghdoufi-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/52-HarounZahoual-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/53-AyoubDahmich-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/54-AmarFafulic-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/55-AymanTalbi-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/56-AminBouchih-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/57-AndrijIlnytskyy-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/58-Khabib --volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/59-AyoubBuurt-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/6-RayaneBenabdelmoumene-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/60-SuhuybBaouch-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/61-RachidBoutkabout-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/62-YoeriVan hemmel-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/63-Khalipo--volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/64-ArmenArzumanyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/65-ErikArzumanyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/66-NamikKaraca-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/67-AnaissaPenaloza-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/68-ArnoldKrmoian-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/69-YassinEl aoufy-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/7-ErikBarseghyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/70-RedaEl aoufy-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/71-MohamedEl aoufy-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/72-ImranHamdaoui-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/73-NoahVoloder-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/74-AlaaCharan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/75-KarinSotirova-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/76-TaouilSofian-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/77-ErnestHarutyunyan-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/78-RedwanHaddin-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/79-YassinTarazi-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/8-HaykGosjan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/80-YoussefSattouti-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/81-----_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/82-RubenHousephan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/83-PerlaFreitas-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/84-SamScheunders-volwassen_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/85-ZaydJaber-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/86-MarouaneEl mohadib-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/87-MalakEl mohadib-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/88-LilithEmmerechts-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/89-FatimaYaznasni-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/9-HrachjaGosjan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/90-MohamedYaznasni-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/91-IsraeYaznasni-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/92-HarounYaznasni-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/93-MohamedBouhoudan-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/94-AdelEl hammouti-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/95-HaykGasparian-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/96-HayleyVan der aa-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/97-MohamedJaghdoufi-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/98-AmiraEl hamouti-jeugd_kaart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/kaarten/99-YoussefTahiri-jeugd_kaart.png" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Ag9hmPzKxOG4iAshD31CNNOqN6" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Menua/AppData/Local/Programs/Python/Interpreter&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mfc-cards" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="773d863f-eb5e-4115-8a29-79fd2b3058fa" name="Changes" comment="" />
+      <created>1655420483838</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655420483838</updated>
+      <workItem from="1655420485847" duration="296000" />
+      <workItem from="1655506521239" duration="71000" />
+      <workItem from="1659211194653" duration="1195000" />
+      <workItem from="1659643962565" duration="615000" />
+      <workItem from="1659807421003" duration="77000" />
+      <workItem from="1659807844234" duration="2593000" />
+      <workItem from="1659898055748" duration="594000" />
+      <workItem from="1660244628906" duration="2429000" />
+      <workItem from="1661289504885" duration="1846000" />
+      <workItem from="1662224488511" duration="4070000" />
+      <workItem from="1662477466169" duration="3979000" />
+      <workItem from="1662483722051" duration="635000" />
+      <workItem from="1662666942554" duration="1158000" />
+      <workItem from="1662914105859" duration="1214000" />
+      <workItem from="1664731812812" duration="1330000" />
+      <workItem from="1666445497505" duration="45000" />
+      <workItem from="1667946072076" duration="19000" />
+      <workItem from="1669641499012" duration="3758000" />
+      <workItem from="1669669544322" duration="11000" />
+      <workItem from="1669767818518" duration="902000" />
+      <workItem from="1670114937086" duration="277000" />
+      <workItem from="1670115258398" duration="1528000" />
+      <workItem from="1675434951394" duration="1320000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/mfc_cards$main.coverage" NAME="main Coverage Results" MODIFIED="1675441467618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
